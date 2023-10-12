@@ -40,7 +40,7 @@ passport.deserializeUser((id, done) => {
 });
 
 // Routes
-app.use('/api/admin', require('./routes/admin'));
+app.use('/api/admin', require('./src/routes/admin'));
 // app.use('/api/employee', require('./src/routes/employee'));
 
 app.listen(port, () => {
