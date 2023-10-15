@@ -8,6 +8,7 @@ const employeeSchema = new mongoose.Schema({
   dateJoin: Date,
   role: String,
   isAdmin: Boolean,
+  
   password: String
 
   // Other employee details

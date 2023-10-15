@@ -5,9 +5,10 @@ const mongoose = require('mongoose');
 const session = require('express-session');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-const bcrypt = require('bcrypt');
-const LocalStrategy = require('passport-local').Strategy;
+// const passport = require('passport');
+require('./src/passport-config.js');
 
+const LocalStrategy = require('passport-local').Strategy;
 const app = express();
 const port = process.env.PORT || 3000;
 
@@ -26,22 +27,10 @@ app.use(session({ secret: 'your-secret-key', resave: false, saveUninitialized: f
 app.use(passport.initialize());
 app.use(passport.session());
 
-// Passport configuration for authentication
-passport.use(new LocalStrategy((username, password, done) => {
-  // Implement authentication logic here
-}));
-
-passport.serializeUser((user, done) => {
-  // Serialize user here
-});
-
-passport.deserializeUser((id, done) => {
-  // Deserialize user here
-});
 
 // Routes
 app.use('/api/admin', require('./src/routes/admin'));
-// app.use('/api/employee', require('./src/routes/employee'));
+app.use('/api/employee', require('./src/routes/employee'));
 
 app.listen(port, () => {
   console.log(`Server is running on port ${port}`);
