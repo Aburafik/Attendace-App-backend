@@ -95,7 +95,7 @@ router.patch("/attendance/clock-out", async (req, res) => {
 
     if (!isAtOffice) {
       console.error("Employee is not at the office premises"); // Log the error
-      return res.status(403).send("Employee is not at the office premises");
+      return res.status(403).json({message:"You are currently not at the office premises, please get closer to the office"});
     }
 
     // Record clock out time
@@ -105,7 +105,7 @@ router.patch("/attendance/clock-out", async (req, res) => {
     });
 
     if (!newRecord) {
-      return res.status(400).send("No corresponding clock in record found");
+      return res.status(400).json({message:"No corresponding clock in record found"});
     }
     // Check if the employee is clocking out before closing hours (e.g., after 5 PM)
     const currentTime = moment(); // Current time
@@ -113,15 +113,15 @@ router.patch("/attendance/clock-out", async (req, res) => {
 
     if (currentTime.isBefore(closingTime)) {
       console.error("Cannot clock out before closing hours"); // Log the error
-      return res.status(403).send("Cannot clock out before closing hours");
+      return res.status(403).json({message:"Cannot clock out before closing hours"});
     }
     newRecord.clockOutTime = new Date();
     await newRecord.save();
     console.log("Clock out recorded successfully"); // Log success
-    res.status(200).send("Clock out recorded successfully");
+    res.status(200).json({message:"Clock out recorded successfully"});
   } catch (err) {
     console.error("Error recording clock out", err); // Log the error
-    res.status(500).send("Error recording clock out");
+    res.status(500).json({message:"Error recording clock out"});
   }
 });
 
