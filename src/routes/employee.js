@@ -54,8 +54,8 @@ router.post("/attendance/clock-in", async (req, res) => {
     const isAtOffice = checkIfEmployeeIsAtOffice(latitude, longitude);
 
     if (!isAtOffice) {
-      console.error("Employee is not at the office premises"); // Log the error
-      return res.status(403).send("Employee is not at the office premises");
+      console.error("You are currently not at the office premises, please get closer to the office"); // Log the error
+      return res.status(403).json({message:"You are currently not at the office premises, please get closer to the office"});
     }
     const lastClockInRecord = await AttendanceRecord.findOne({
       employee: employeeId,
@@ -66,8 +66,8 @@ router.post("/attendance/clock-in", async (req, res) => {
     });
 
     if (lastClockInRecord) {
-      console.error("Employee has already clocked in today"); // Log the error
-      return res.status(400).send("Employee has already clocked in today");
+      console.error("You have already clocked in today"); // Log the error
+      return res.status(400).json({message:"You have already clocked in today"});
     }
     // Record attendance
     const newRecord = new AttendanceRecord({
@@ -77,11 +77,11 @@ router.post("/attendance/clock-in", async (req, res) => {
     });
 
     await newRecord.save();
-    console.log("Attendance recorded successfully"); // Log success
-    res.status(201).send("Attendance recorded successfully");
+    console.log("Clock In successfully recorded"); // Log success
+    res.status(201).json({message:"Clock In successfully recorded"}); // Log success
   } catch (err) {
     console.error("Error recording attendance", err); // Log the error
-    res.status(500).send("Error recording attendance");
+    res.status(500).json({message:"Error recording attendance"});
   }
 });
 
