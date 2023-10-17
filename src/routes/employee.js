@@ -41,7 +41,7 @@ router.post("/login", async (req, res) => {
       .status(200)
       .json({ message: "Employee login successful", employee: user });
   } catch (err) {
-    return res.status(500).send("Error during login");
+    return res.status(500).json({message:"Error during login"});
   }
 });
 
@@ -73,6 +73,7 @@ router.post("/attendance/clock-in", async (req, res) => {
     const newRecord = new AttendanceRecord({
       employee: employeeId,
       clockInTime: new Date(),
+      clockOutTime:null,
       email: employeeID.email,
     });
 
@@ -111,10 +112,10 @@ router.patch("/attendance/clock-out", async (req, res) => {
     const currentTime = moment(); // Current time
     const closingTime = moment("17:00", "HH:mm"); // Closing time (5 PM)
 
-    if (currentTime.isBefore(closingTime)) {
-      console.error("Cannot clock out before closing hours"); // Log the error
-      return res.status(403).json({message:"Cannot clock out before closing hours"});
-    }
+//     if (currentTime.isBefore(closingTime)) {
+//       console.error("Cannot clock out before closing hours"); // Log the error
+//       return res.status(403).json({message:"Cannot clock out before closing hours"});
+//     }
     newRecord.clockOutTime = new Date();
     await newRecord.save();
     console.log("Clock out recorded successfully"); // Log success
