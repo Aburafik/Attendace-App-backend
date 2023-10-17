@@ -4,6 +4,7 @@ const router = express.Router();
 const moment = require("moment");
 // Import the Employee model
 const Employee = require("../models/Employee");
+const TaskReport = require("../models/TaskReport");
 const AttendanceRecord = require("../models/AttendanceReports");
 const OFFICE_LOCATION = {
   latitude: 12.9716, // Replace with your office's latitude
@@ -34,6 +35,7 @@ router.post("/login", async (req, res) => {
       name: employee.name,
       staffId: employee.staffId,
       role: employee.role,
+      id: employee.id
     };
     return res
       .status(200)
@@ -56,14 +58,17 @@ router.post("/attendance/clock-in", async (req, res) => {
       return res.status(403).send("Employee is not at the office premises");
     }
     const lastClockInRecord = await AttendanceRecord.findOne({
-          employee: employeeId,
-          clockInTime: { $gte: moment().startOf('day').toDate(), $lt: moment().endOf('day').toDate() },
-        });
-    
-        if (lastClockInRecord) {
-          console.error('Employee has already clocked in today'); // Log the error
-          return res.status(400).send('Employee has already clocked in today');
-        }
+      employee: employeeId,
+      clockInTime: {
+        $gte: moment().startOf("day").toDate(),
+        $lt: moment().endOf("day").toDate(),
+      },
+    });
+
+    if (lastClockInRecord) {
+      console.error("Employee has already clocked in today"); // Log the error
+      return res.status(400).send("Employee has already clocked in today");
+    }
     // Record attendance
     const newRecord = new AttendanceRecord({
       employee: employeeId,
@@ -161,5 +166,116 @@ function getDistanceBetweenPoints(point1, point2) {
   const distance = R * c;
   return distance;
 }
+
+//GET EMPLOYEE ATTENDANCE REGORDS
+router.get("/attendance/:employeeId", async (req, res) => {
+  const { employeeId } = req.params;
+
+  try {
+    const records = await AttendanceRecord.find({ employee: employeeId }).sort({
+      timestamp: "desc",
+    });
+
+    res.status(200).json(records);
+  } catch (err) {
+    console.error("Error retrieving attendance records", err);
+    res.status(500).send("Error retrieving attendance records");
+  }
+});
+
+// Create a task report
+router.post("/create-task", async (req, res) => {
+  const { title, description } = req.body;
+
+  try {
+    // Retrieve the logged-in employee (you should have authentication in place)
+    const employeeId = req.user.id;
+
+    // Create a new task report
+    const newReport = new TaskReport({
+      employee: employeeId,
+      title,
+      description,
+    });
+
+    await newReport.save();
+    res.status(201).json(newReport);
+  } catch (err) {
+    console.error("Error creating task report", err);
+    res.status(500).send("Error creating task report");
+  }
+});
+
+// Edit a task report
+router.patch("/edit/task/:reportId", async (req, res) => {
+  const { title, description } = req.body;
+  const { reportId } = req.params;
+
+  try {
+    // Retrieve the logged-in employee (you should have authentication in place)
+    const employeeId = req.user.id;
+
+    // Check if the task report exists and is associated with the logged-in employee
+    const existingReport = await TaskReport.findOne({
+      _id: reportId,
+      employee: employeeId,
+    });
+
+    if (!existingReport) {
+      return res.status(404).send("Task report not found");
+    }
+
+    // Check if the task report was created on the same day
+    const today = moment().startOf("day");
+    if (!moment(existingReport.timestamp).isSame(today, "day")) {
+      return res
+        .status(403)
+        .send("Task report can only be edited on the same day it was created");
+    }
+
+    // Update the content of the task report
+    existingReport.description = description;
+    await existingReport.save();
+    res.status(200).json(existingReport);
+  } catch (err) {
+    console.error("Error editing task report", err);
+    res.status(500).send("Error editing task report");
+  }
+});
+
+// Delete a task report
+router.delete("/delete-task/:reportId", async (req, res) => {
+  const { reportId } = req.params;
+
+  try {
+    // Retrieve the logged-in employee (you should have authentication in place)
+    const employeeId = req.user.id;
+
+    // Check if the task report exists and is associated with the logged-in employee
+    const existingReport = await TaskReport.findOne({
+      _id: reportId,
+      employee: employeeId,
+    });
+
+    if (!existingReport) {
+      return res.status(404).send("Task report not found");
+    }
+
+    // Check if the task report was created on the same day
+    const today = moment().startOf("day");
+    if (!moment(existingReport.timestamp).isSame(today, "day")) {
+      return res
+        .status(403)
+        .send("Task report can only be deleted on the same day it was created");
+    }
+
+    // Delete the task report
+    await existingReport.remove();
+    res.status(204).send();
+  } catch (err) {
+    console.error("Error deleting task report", err);
+    res.status(500).send("Error deleting task report");
+  }
+});
 
 module.exports = router;
