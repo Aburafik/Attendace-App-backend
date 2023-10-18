@@ -202,7 +202,7 @@ router.get("/attendance/:employeeId", async (req, res) => {
 
 // Create a task report
 router.post("/create-task", async (req, res) => {
-  const { title, description, employeeId } = req.body;
+  const {title, description, employeeId } = req.body;
 
   try {
     // Retrieve the logged-in employee (you should have authentication in place)
@@ -223,7 +223,7 @@ router.post("/create-task", async (req, res) => {
   }
 });
 
-//Get employee Task information
+//Get employee Task Task History
 router.get("/task/:employeeId", async (req, res) => {
   const { employeeId } = req.params;
 
@@ -240,13 +240,13 @@ router.get("/task/:employeeId", async (req, res) => {
 });
 
 // Edit a task report
-router.patch("/edit/task/:reportId", async (req, res) => {
-  const { title, description } = req.body;
+router.patch("/task/edit/:reportId", async (req, res) => {
+  const { title, description,employeeId } = req.body;
   const { reportId } = req.params;
 
   try {
     // Retrieve the logged-in employee (you should have authentication in place)
-    const employeeId = req.user.id;
+//     const employeeId = req.user.id;
 
     // Check if the task report exists and is associated with the logged-in employee
     const existingReport = await TaskReport.findOne({
@@ -255,7 +255,7 @@ router.patch("/edit/task/:reportId", async (req, res) => {
     });
 
     if (!existingReport) {
-      return res.status(404).send("Task report not found");
+      return res.status(404).json({message:"Task report not found"});
     }
 
     // Check if the task report was created on the same day
@@ -263,13 +263,14 @@ router.patch("/edit/task/:reportId", async (req, res) => {
     if (!moment(existingReport.timestamp).isSame(today, "day")) {
       return res
         .status(403)
-        .send("Task report can only be edited on the same day it was created");
+        .json({message:"Task report can only be edited on the same day it was created"});
     }
 
     // Update the content of the task report
     existingReport.description = description;
+    existingReport.title=title;
     await existingReport.save();
-    res.status(200).json(existingReport);
+    res.status(200).json({message: "The task has been updated successfully", existingReport});
   } catch (err) {
     console.error("Error editing task report", err);
     res.status(500).send("Error editing task report");
