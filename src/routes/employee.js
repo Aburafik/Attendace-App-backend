@@ -35,13 +35,13 @@ router.post("/login", async (req, res) => {
       name: employee.name,
       staffId: employee.staffId,
       role: employee.role,
-      id: employee.id
+      id: employee.id,
     };
     return res
       .status(200)
       .json({ message: "Employee login successful", employee: user });
   } catch (err) {
-    return res.status(500).json({message:"Error during login"});
+    return res.status(500).json({ message: "Error during login" });
   }
 });
 
@@ -54,8 +54,15 @@ router.post("/attendance/clock-in", async (req, res) => {
     const isAtOffice = checkIfEmployeeIsAtOffice(latitude, longitude);
 
     if (!isAtOffice) {
-      console.error("You are currently not at the office premises, please get closer to the office"); // Log the error
-      return res.status(403).json({message:"You are currently not at the office premises, please get closer to the office"});
+      console.error(
+        "You are currently not at the office premises, please get closer to the office"
+      ); // Log the error
+      return res
+        .status(403)
+        .json({
+          message:
+            "You are currently not at the office premises, please get closer to the office",
+        });
     }
     const lastClockInRecord = await AttendanceRecord.findOne({
       employee: employeeId,
@@ -67,22 +74,24 @@ router.post("/attendance/clock-in", async (req, res) => {
 
     if (lastClockInRecord) {
       console.error("You have already clocked in today"); // Log the error
-      return res.status(400).json({message:"You have already clocked in today"});
+      return res
+        .status(400)
+        .json({ message: "You have already clocked in today" });
     }
     // Record attendance
     const newRecord = new AttendanceRecord({
       employee: employeeId,
       clockInTime: new Date(),
-      clockOutTime:null,
+      clockOutTime: null,
       email: employeeID.email,
     });
 
     await newRecord.save();
     console.log("Clock In successfully recorded"); // Log success
-    res.status(201).json({message:"Clock In successfully recorded"}); // Log success
+    res.status(201).json({ message: "Clock In successfully recorded" }); // Log success
   } catch (err) {
     console.error("Error recording attendance", err); // Log the error
-    res.status(500).json({message:"Error recording attendance"});
+    res.status(500).json({ message: "Error recording attendance" });
   }
 });
 
@@ -96,7 +105,12 @@ router.patch("/attendance/clock-out", async (req, res) => {
 
     if (!isAtOffice) {
       console.error("Employee is not at the office premises"); // Log the error
-      return res.status(403).json({message:"You are currently not at the office premises, please get closer to the office"});
+      return res
+        .status(403)
+        .json({
+          message:
+            "You are currently not at the office premises, please get closer to the office",
+        });
     }
 
     // Record clock out time
@@ -106,23 +120,25 @@ router.patch("/attendance/clock-out", async (req, res) => {
     });
 
     if (!newRecord) {
-      return res.status(400).json({message:"No corresponding clock in record found"});
+      return res
+        .status(400)
+        .json({ message: "No corresponding clock in record found" });
     }
     // Check if the employee is clocking out before closing hours (e.g., after 5 PM)
     const currentTime = moment(); // Current time
     const closingTime = moment("17:00", "HH:mm"); // Closing time (5 PM)
 
-//     if (currentTime.isBefore(closingTime)) {
-//       console.error("Cannot clock out before closing hours"); // Log the error
-//       return res.status(403).json({message:"Cannot clock out before closing hours"});
-//     }
+    //     if (currentTime.isBefore(closingTime)) {
+    //       console.error("Cannot clock out before closing hours"); // Log the error
+    //       return res.status(403).json({message:"Cannot clock out before closing hours"});
+    //     }
     newRecord.clockOutTime = new Date();
     await newRecord.save();
     console.log("Clock out recorded successfully"); // Log success
-    res.status(200).json({message:"Clock out recorded successfully"});
+    res.status(200).json({ message: "Clock out recorded successfully" });
   } catch (err) {
     console.error("Error recording clock out", err); // Log the error
-    res.status(500).json({message:"Error recording clock out"});
+    res.status(500).json({ message: "Error recording clock out" });
   }
 });
 
@@ -186,11 +202,11 @@ router.get("/attendance/:employeeId", async (req, res) => {
 
 // Create a task report
 router.post("/create-task", async (req, res) => {
-  const { title, description } = req.body;
+  const { title, description, employeeId } = req.body;
 
   try {
     // Retrieve the logged-in employee (you should have authentication in place)
-    const employeeId = req.user.id;
+    //     const employeeId = req.user.id;
 
     // Create a new task report
     const newReport = new TaskReport({
@@ -204,6 +220,22 @@ router.post("/create-task", async (req, res) => {
   } catch (err) {
     console.error("Error creating task report", err);
     res.status(500).send("Error creating task report");
+  }
+});
+
+//Get employee Task information
+router.get("/task/:employeeId", async (req, res) => {
+  const { employeeId } = req.params;
+
+  try {
+    const records = await TaskReport.find({ employee: employeeId }).sort({
+      timestamp: "desc",
+    });
+
+    res.status(200).json(records);
+  } catch (err) {
+    console.error("Error retrieving task records", err);
+    res.status(500).send("Error retrieving Task records");
   }
 });
 
@@ -278,5 +310,7 @@ router.delete("/delete-task/:reportId", async (req, res) => {
     res.status(500).send("Error deleting task report");
   }
 });
+
+///get employee task report
 
 module.exports = router;

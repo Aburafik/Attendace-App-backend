@@ -14,6 +14,7 @@ const attendanceRecordSchema = new mongoose.Schema({
         clockOutTime: {
           type: Date,
         },
+      
   
 });
 
