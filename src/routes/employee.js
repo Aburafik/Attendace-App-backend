@@ -6,6 +6,7 @@ const moment = require("moment");
 const Employee = require("../models/Employee");
 const TaskReport = require("../models/TaskReport");
 const AttendanceRecord = require("../models/AttendanceReports");
+const LeaveRequest = require("../models/LeaveRequest");
 const OFFICE_LOCATION = {
   latitude: 12.9716, // Replace with your office's latitude
   longitude: 77.5946, // Replace with your office's longitude
@@ -57,12 +58,10 @@ router.post("/attendance/clock-in", async (req, res) => {
       console.error(
         "You are currently not at the office premises, please get closer to the office"
       ); // Log the error
-      return res
-        .status(403)
-        .json({
-          message:
-            "You are currently not at the office premises, please get closer to the office",
-        });
+      return res.status(403).json({
+        message:
+          "You are currently not at the office premises, please get closer to the office",
+      });
     }
     const lastClockInRecord = await AttendanceRecord.findOne({
       employee: employeeId,
@@ -105,12 +104,10 @@ router.patch("/attendance/clock-out", async (req, res) => {
 
     if (!isAtOffice) {
       console.error("Employee is not at the office premises"); // Log the error
-      return res
-        .status(403)
-        .json({
-          message:
-            "You are currently not at the office premises, please get closer to the office",
-        });
+      return res.status(403).json({
+        message:
+          "You are currently not at the office premises, please get closer to the office",
+      });
     }
 
     // Record clock out time
@@ -128,10 +125,10 @@ router.patch("/attendance/clock-out", async (req, res) => {
     const currentTime = moment(); // Current time
     const closingTime = moment("17:00", "HH:mm"); // Closing time (5 PM)
 
-    //     if (currentTime.isBefore(closingTime)) {
-    //       console.error("Cannot clock out before closing hours"); // Log the error
-    //       return res.status(403).json({message:"Cannot clock out before closing hours"});
-    //     }
+        if (currentTime.isBefore(closingTime)) {
+          console.error("Cannot clock out before closing hours"); // Log the error
+          return res.status(403).json({message:"Cannot clock out before closing hours"});
+        }
     newRecord.clockOutTime = new Date();
     await newRecord.save();
     console.log("Clock out recorded successfully"); // Log success
@@ -202,12 +199,9 @@ router.get("/attendance/:employeeId", async (req, res) => {
 
 // Create a task report
 router.post("/create-task", async (req, res) => {
-  const {title, description, employeeId } = req.body;
+  const { title, description, employeeId } = req.body;
 
   try {
-    // Retrieve the logged-in employee (you should have authentication in place)
-    //     const employeeId = req.user.id;
-
     // Create a new task report
     const newReport = new TaskReport({
       employee: employeeId,
@@ -241,12 +235,12 @@ router.get("/task/:employeeId", async (req, res) => {
 
 // Edit a task report
 router.patch("/task/edit/:reportId", async (req, res) => {
-  const { title, description,employeeId } = req.body;
+  const { title, description, employeeId } = req.body;
   const { reportId } = req.params;
 
   try {
     // Retrieve the logged-in employee (you should have authentication in place)
-//     const employeeId = req.user.id;
+    //     const employeeId = req.user.id;
 
     // Check if the task report exists and is associated with the logged-in employee
     const existingReport = await TaskReport.findOne({
@@ -255,22 +249,26 @@ router.patch("/task/edit/:reportId", async (req, res) => {
     });
 
     if (!existingReport) {
-      return res.status(404).json({message:"Task report not found"});
+      return res.status(404).json({ message: "Task report not found" });
     }
 
     // Check if the task report was created on the same day
     const today = moment().startOf("day");
     if (!moment(existingReport.timestamp).isSame(today, "day")) {
-      return res
-        .status(403)
-        .json({message:"Task report can only be edited on the same day it was created"});
+      return res.status(403).json({
+        message:
+          "Task report can only be edited on the same day it was created",
+      });
     }
 
     // Update the content of the task report
     existingReport.description = description;
-    existingReport.title=title;
+    existingReport.title = title;
     await existingReport.save();
-    res.status(200).json({message: "The task has been updated successfully", existingReport});
+    res.status(200).json({
+      message: "The task has been updated successfully",
+      existingReport,
+    });
   } catch (err) {
     console.error("Error editing task report", err);
     res.status(500).send("Error editing task report");
@@ -312,6 +310,103 @@ router.delete("/delete-task/:reportId", async (req, res) => {
   }
 });
 
-///get employee task report
+///Requst leave
+router.post("/leave-requests", async (req, res) => {
+  const { reason, startDate, endDate , employeeId} = req.body;
+
+  try {
+
+    // Create a new leave request
+    const newRequest = new LeaveRequest({
+      employee: employeeId,
+      reason,
+      startDate,
+      endDate,
+    });
+
+    await newRequest.save();
+    res.status(201).json({message: "Your leave request has been submitted successfully",newRequest});
+  } catch (err) {
+    console.error("Error creating leave request", err);
+    res.status(500).json({message:"Error creating leave request"});
+  }
+});
+
+// Edit a leave request
+router.patch("/leave-requests/:requestId", async (req, res) => {
+  const { content, leaveType, startDate, endDate } = req.body;
+  const { requestId } = req.params;
+
+  try {
+    // Retrieve the logged-in employee (you should have authentication in place)
+    const employeeId = req.user.id;
+
+    // Check if the leave request exists and is associated with the logged-in employee
+    const existingRequest = await LeaveRequest.findOne({
+      _id: requestId,
+      employee: employeeId,
+    });
+
+    if (!existingRequest) {
+      return res.status(404).send("Leave request not found");
+    }
+
+    // Check if the request's start date is in the future
+    const today = moment().startOf("day");
+    if (moment(existingRequest.startDate).isBefore(today)) {
+      return res
+        .status(403)
+        .json({message: "Leave request can only be edited if the start date is in the future"}
+        );
+    }
+
+    // Update the leave request
+    existingRequest.reason = reason;
+    existingRequest.leaveType = leaveType;
+    existingRequest.startDate = startDate;
+    existingRequest.endDate = endDate;
+    await existingRequest.save();
+    res.status(200).json(existingRequest);
+  } catch (err) {
+    console.error("Error editing leave request", err);
+    res.status(500).send("Error editing leave request");
+  }
+});
+// Delete a leave request
+router.delete("/leave-requests/:requestId", async (req, res) => {
+  const { requestId } = req.params;
+
+  try {
+    // Retrieve the logged-in employee (you should have authentication in place)
+    const employeeId = req.user.id;
+
+    // Check if the leave request exists and is associated with the logged-in employee
+    const existingRequest = await LeaveRequest.findOne({
+      _id: requestId,
+      employee: employeeId,
+    });
+
+    if (!existingRequest) {
+      return res.status(404).send("Leave request not found");
+    }
+
+    // Check if the request's start date is in the future
+    const today = moment().startOf("day");
+    if (moment(existingRequest.startDate).isBefore(today)) {
+      return res
+        .status(403)
+        .send(
+          "Leave request can only be deleted if the start date is in the future"
+        );
+    }
+
+    // Delete the leave request
+    await existingRequest.remove();
+    res.status(204).send();
+  } catch (err) {
+    console.error("Error deleting leave request", err);
+    res.status(500).send("Error deleting leave request");
+  }
+});
 
 module.exports = router;

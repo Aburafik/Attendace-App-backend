@@ -2,12 +2,13 @@ const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Employee = require("../models/Employee");
 const express = require("express");
-const moment = require('moment');
+// const moment = require("moment");
+const Notification = require('../models/notifications');
 // const { isAdmin } = require('../middleware'); // Create a middleware to check admin status
 
 // Import the Employee and AttendanceRecord models
 // const Employee = require('../models/Employee');
-const AttendanceRecord = require('../models/AttendanceReports');
+const AttendanceRecord = require("../models/AttendanceReports");
 
 //Auth Token
 const verifyToken = (req, res, next) => {
@@ -195,6 +196,28 @@ router.get("/attendance/:employeeId/records", async (req, res) => {
   } catch (err) {
     console.error("Error retrieving attendance records", err);
     res.status(500).send("Error retrieving attendance records");
+  }
+});
+
+router.post("/notifications", async (req, res) => {
+  const { title, body } = req.body;
+
+  try {
+    // Create a new notification
+    const newNotification = new Notification({
+      title,
+      body,
+    });
+
+    await newNotification.save();
+
+    // Broadcast the new notification to all connected employees
+    io.emit("newNotification", newNotification);
+
+    res.status(201).json(newNotification);
+  } catch (err) {
+    console.error("Error creating notification", err);
+    res.status(500).send("Error creating notification");
   }
 });
 
