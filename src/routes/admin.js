@@ -1,29 +1,18 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Employee = require("../models/Employee");
+const http = require('http');
+const socketIo = require('socket.io');
 const express = require("express");
 // const moment = require("moment");
 const Notification = require('../models/notifications');
-// const { isAdmin } = require('../middleware'); // Create a middleware to check admin status
 
-// Import the Employee and AttendanceRecord models
-// const Employee = require('../models/Employee');
 const AttendanceRecord = require("../models/AttendanceReports");
 
-//Auth Token
-const verifyToken = (req, res, next) => {
-  const token = req.headers.authorization?.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
-  jwt.verify(token, "secret-key", (err, decodedToken) => {
-    if (err) {
-      return res.status(401).json({ error: "Unauthorized" });
-    }
-    req.userId = decodedToken.userId;
-    next();
-  });
-};
+
+const app = express();
+const server = http.createServer(app);
+const io = socketIo(server); 
 const router = express.Router();
 // Admin registration route
 router.post("/register", async (req, res) => {
@@ -217,7 +206,7 @@ router.post("/notifications", async (req, res) => {
     res.status(201).json(newNotification);
   } catch (err) {
     console.error("Error creating notification", err);
-    res.status(500).send("Error creating notification");
+    res.status(500).send("Error creating notification ");
   }
 });
 
