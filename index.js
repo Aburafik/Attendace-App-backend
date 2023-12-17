@@ -34,19 +34,36 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-io.on("connection", (socket) => {
-  console.log("A user connected");
+// io.on("connection", (socket) => {
+//   console.log("A user connected");
 
-  // Listen for the employee's email and join a room based on their email
-  socket.on("join", (email) => {
-    socket.join(email);
-  });
+//   // Listen for the employee's email and join a room based on their email
+//   socket.on("join", (email) => {
+//     socket.join(email);
+//   });
 
-  // Disconnect event handling
-  socket.on("disconnect", () => {
-    console.log("User disconnected");
-  });
-});
+//   // Disconnect event handling
+//   socket.on("disconnect", () => {
+//     console.log("User disconnected");
+//   });
+// });
+
+
+io.on('connection', (socket) => {
+          console.log('a user connected');
+          socket.on('chat_message', (msg) => {
+            console.log('message: ' + msg);
+            io.emit('chat_message', msg);
+          });
+          socket.on('disconnect', () => {
+            console.log('user disconnected');
+          });
+        });
+
+
+
+
+
 // Routes
 app.use("/api/admin", require("./src/routes/admin"));
 app.use("/api/employee", require("./src/routes/employee"));
