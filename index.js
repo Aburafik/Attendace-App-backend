@@ -5,14 +5,17 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const bodyParser = require("body-parser");
-const socketIo = require("socket.io");
-const http = require('http');
+// const socketIo = require("socket.io");
+// const http = require('http');
 require("./src/passport-config.js");
 
 const app = express();
+const http = require('http').Server(app);
+const io = require('socket.io')(http);
+
 const port = process.env.PORT || 3000;
-const server = http.createServer(app);
-const io = socketIo(server);
+// const server = http.createServer(app);
+// const io = socketIo(server);
 const mongoString = process.env.DATABASE_URL;
 mongoose.connect(mongoString);
 const database = mongoose.connection;
@@ -37,18 +40,11 @@ app.use(passport.session());
 // io.on("connection", (socket) => {
 //   console.log("A user connected");
 
-//   // Listen for the employee's email and join a room based on their email
-//   socket.on("join", (email) => {
-//     socket.join(email);
-//   });
-
-//   // Disconnect event handling
 //   socket.on("disconnect", () => {
 //     console.log("User disconnected");
 //   });
+  
 // });
-
-
 io.on('connection', (socket) => {
           console.log('a user connected');
           socket.on('chat_message', (msg) => {
@@ -61,13 +57,12 @@ io.on('connection', (socket) => {
         });
 
 
-
-
-
 // Routes
 app.use("/api/admin", require("./src/routes/admin"));
 app.use("/api/employee", require("./src/routes/employee"));
 
-app.listen(port, () => {
+http.listen(port, () => {
   console.log(`Server is running on port ${port}`);
+  
 });
+
