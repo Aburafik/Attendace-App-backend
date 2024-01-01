@@ -1,20 +1,25 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Employee = require("../models/Employee");
-const http = require('http');
-const socketIo = require('socket.io');
-const express = require("express");
-// const moment = require("moment");
 const Notification = require('../models/notifications');
-
 const AttendanceRecord = require("../models/AttendanceReports");
+const bodyParser = require("body-parser");
 
+const express = require("express");
 
 const app = express();
-const server = http.createServer(app);
-const io = socketIo(server); 
+app.use(bodyParser.json());
+
 const router = express.Router();
-// Admin registration route
+
+const http = require('http').Server(app);
+const io = require('socket.io')(http); 
+
+
+
+// const moment = require("moment");
+
+
 router.post("/register", async (req, res) => {
   const { email, staffId, name, password, role } = req.body;
 
@@ -201,13 +206,16 @@ router.post("/notifications", async (req, res) => {
     await newNotification.save();
 
     // Broadcast the new notification to all connected employees
-    io.emit("newNotification", newNotification);
+//   const notifications = await Notification.find()
 
+    io.emit("newNotification", newNotification);
     res.status(201).json(newNotification);
+    console.log(newNotification);
   } catch (err) {
     console.error("Error creating notification", err);
     res.status(500).send("Error creating notification ");
   }
 });
+// app.use("/api/admin", router);
 
-module.exports = router;
+module.exports = {router,express,io, http,app};
