@@ -4,11 +4,13 @@ const Employee = require("../models/Employee");
 const Notification = require('../models/notifications');
 const AttendanceRecord = require("../models/AttendanceReports");
 const bodyParser = require("body-parser");
+const cors = require('cors');
 
 const express = require("express");
 
 const app = express();
 app.use(bodyParser.json());
+app.use(cors());
 
 const router = express.Router();
 

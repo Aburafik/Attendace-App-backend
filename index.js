@@ -40,9 +40,11 @@ app.use(
     saveUninitialized: false,
   })
 );
+
+
 app.use(passport.initialize());
 app.use(passport.session());
-
+// app.use(corse);
 // Routes
 app.use("/api/admin", router);
 app.use("/api/employee", require("./src/routes/employee"));
