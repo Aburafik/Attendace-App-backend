@@ -1,14 +1,25 @@
-const express = require("express");
-const router = express.Router()
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
+const Employee = require("../models/Employee");
+const Notification = require('../models/notifications');
+const AttendanceRecord = require("../models/AttendanceReports");
+const bodyParser = require("body-parser");
+const cors = require('cors');
+const app = express();
+app.use(bodyParser.json());
+app.use(cors());
 
-const { register } = require('../')
+
+
+const http = require('http').Server(app);
+const io = require('socket.io')(http); 
 
 
 
 // const moment = require("moment");
 
 
-router.post("/register", async (req, res) => {
+const register = async (req, res) => {
   const { email, staffId, name, password, role } = req.body;
 
   // Check if the email is already taken
@@ -66,7 +77,7 @@ router.post("/register", async (req, res) => {
   //Login user
 });
 
-router.post("/login", async (req, res) => {
+const login = async (req, res) => {
   const { email, password } = req.body;
 
   // Find the admin by email and check if they are an admin
@@ -98,7 +109,7 @@ router.post("/login", async (req, res) => {
 });
 
 // Create employee route
-router.post("/create-employee", async (req, res) => {
+const createEmployee = async (req, res) => {
   const { email, staffId, name, password, role } = req.body;
 
   // Check if the email is already taken
@@ -181,7 +192,7 @@ router.get("/attendance/:employeeId/records", async (req, res) => {
   }
 });
 
-router.post("/notifications", async (req, res) => {
+const notifications = async (req, res) => {
   const { title, body } = req.body;
 
   try {
@@ -206,4 +217,11 @@ router.post("/notifications", async (req, res) => {
 });
 // app.use("/api/admin", router);
 
-module.exports = {router,express,io, http,app};
+module.exports = { register, 
+                    login, 
+                    createEmployee, 
+                    notifications, 
+                    express,
+                    io, 
+                    http,
+                    app };
