@@ -1,36 +1,17 @@
 require("dotenv").config();
-const mongoose = require("mongoose");
 const session = require("express-session");
 const passport = require("passport");
 const bodyParser = require("body-parser");
 require("./src/passport-config.js");
-const { http, router,app, io } = require("./src/routes/admin");
+const { http, router} = require("./src/routes/admin");
+const { app, http, io } = require('./src/socket/connectToSocket.js')
+const { connectToDb } = require("./src/dataBase/db.js");
 
 const port = process.env.PORT || 3000;
 
-const mongoString = process.env.DATABASE_URL;
-mongoose.connect(mongoString);
-const database = mongoose.connection;
-database.on("error", (error) => {
-  console.log(error);
-});
-database.once("connected", () => {
-  console.log("Database Connected Successfully");
-});
+connectToDb()
 
-io.on("connection", (socket) => {
-  console.log("Client connected");
-
-  // Listen for new notification events
-  socket.on("newNotification", (notification) => {
-    io.emit("newNotification", notification); // Broadcast to all connected clients
-    console.log("Notification received:", notification);
-  });
-
-  socket.on("disconnect", () => {
-    console.log("Client disconnected");
-  });
-});
+io()
 
 app.use(bodyParser.json());
 app.use(
@@ -40,7 +21,6 @@ app.use(
     saveUninitialized: false,
   })
 );
-
 
 app.use(passport.initialize());
 app.use(passport.session());

@@ -75,7 +75,7 @@ const register = async (req, res) => {
   }
 
   //Login user
-});
+};
 
 const login = async (req, res) => {
   const { email, password } = req.body;
@@ -106,7 +106,7 @@ const login = async (req, res) => {
       .status(401)
       .send("Invalid Staff Id,please use your valid staff.");
   }
-});
+};
 
 // Create employee route
 const createEmployee = async (req, res) => {
@@ -146,10 +146,10 @@ const createEmployee = async (req, res) => {
     console.log(err);
     res.status(500).send("Error creating employee.");
   }
-});
+};
 
 // Admin-only route to get attendance records of all employees
-router.get("/attendance/all-records", async (req, res) => {
+const getAllAttendanceRecords = async (req, res) => {
   try {
     // Check if the logged-in user is an admin
     const loggedInUserIsAdmin = req.user.isAdmin; // Assuming admin status is stored in req.user
@@ -166,10 +166,10 @@ router.get("/attendance/all-records", async (req, res) => {
     console.error("Error retrieving attendance records", err);
     res.status(500).send("Error retrieving attendance records");
   }
-});
+};
 
 // Admin-only route to query attendance records for a particular employee
-router.get("/attendance/:employeeId/records", async (req, res) => {
+const getSingleRecord = async (req, res) => {
   const { employeeId } = req.params;
 
   try {
@@ -190,7 +190,7 @@ router.get("/attendance/:employeeId/records", async (req, res) => {
     console.error("Error retrieving attendance records", err);
     res.status(500).send("Error retrieving attendance records");
   }
-});
+};
 
 const notifications = async (req, res) => {
   const { title, body } = req.body;
@@ -214,13 +214,15 @@ const notifications = async (req, res) => {
     console.error("Error creating notification", err);
     res.status(500).send("Error creating notification ");
   }
-});
+};
 // app.use("/api/admin", router);
 
 module.exports = { register, 
                     login, 
                     createEmployee, 
                     notifications, 
+                    getAllAttendanceRecords,
+                    getSingleRecord,
                     express,
                     io, 
                     http,
