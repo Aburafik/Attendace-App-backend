@@ -2,6 +2,7 @@ require("dotenv").config();
 const session = require("express-session");
 const passport = require("passport");
 const bodyParser = require("body-parser");
+const morgan = require('morgan')
 require("./src/passport-config.js");
 const cors = require('cors')
 const { router} = require("./src/routes/admin");
@@ -11,6 +12,7 @@ const app = require('express')()
 const port = process.env.PORT || 3000;
 
 app.use(cors());
+app.use(morgan('dev'))
 
 connectToDb()
 

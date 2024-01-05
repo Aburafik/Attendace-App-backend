@@ -20,7 +20,6 @@ const io = require('socket.io')(http);
 
 const register = async (req, res) => {
   const { email, staffId, name, password, role } = req.body;
-
   // Check if the email is already taken
   const existingAdmin = await Employee.findOne({ email, isAdmin: true });
   // Check if employee is Id is already taken
@@ -39,6 +38,7 @@ const register = async (req, res) => {
 
   // Hash the password before storing it in the database
   const hashedPassword = await bcrypt.hash(password, 10);
+  // console.log(hashedPassword)
 
   const newAdmin = new Employee({
     email,
@@ -62,13 +62,10 @@ const register = async (req, res) => {
       role: newAdmin.role,
       password: newAdmin.password,
       isAdmin: newAdmin.isAdmin,
+      token: token
     };
 
-    res.status(201).json({
-      message: "Admin registration successful.",
-      newUser,
-      token: token,
-    });
+    res.status(201).json(newUser)
   } catch (err) {
     res.status(500).send("Error registering admin.");
   }
@@ -193,7 +190,7 @@ const getSingleRecord = async (req, res) => {
 
 const notifications = async (req, res) => {
   const { title, body } = req.body;
-
+  console.log(title)
   try {
     // Create a new notification
     const newNotification = new Notification({
