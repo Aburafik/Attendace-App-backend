@@ -3,15 +3,34 @@ const session = require("express-session");
 const passport = require("passport");
 const bodyParser = require("body-parser");
 require("./src/passport-config.js");
-const { http, router} = require("./src/routes/admin");
-const { app, http, io } = require('./src/socket/connectToSocket.js')
-const { connectToDb } = require("./src/dataBase/db.js");
+const cors = require('cors')
+const { router} = require("./src/routes/admin");
+const { connectToDb } = require('./src/dataBase/connectToDb.js')
+const app = require('express')()
 
 const port = process.env.PORT || 3000;
 
+app.use(cors());
+
 connectToDb()
 
-io()
+const http = require('http').Server(app);
+const io = require('socket.io')(http); 
+
+io.on("connection", (socket) => {
+    console.log("Client connected");
+  
+    // Listen for new notification events
+    socket.on("newNotification", (notification) => {
+      io.emit("newNotification", notification); // Broadcast to all connected clients
+      console.log("Notification received:", notification);
+    });
+  
+    socket.on("disconnect", () => {
+      console.log("Client disconnected");
+    });
+});
+
 
 app.use(bodyParser.json());
 app.use(
