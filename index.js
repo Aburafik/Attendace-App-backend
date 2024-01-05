@@ -5,8 +5,9 @@ const bodyParser = require("body-parser");
 require("./src/passport-config.js");
 const cors = require('cors')
 const { router} = require("./src/routes/admin");
+const {app,http,io}=require("./src/controllers/adminController.js")
 const { connectToDb } = require('./src/dataBase/connectToDb.js')
-const app = require('express')()
+// const app = require('express')()
 
 const port = process.env.PORT || 3000;
 
@@ -14,8 +15,8 @@ app.use(cors());
 
 connectToDb()
 
-const http = require('http').Server(app);
-const io = require('socket.io')(http); 
+// const http = require('http').Server(app);
+// const io = require('socket.io')(http); 
 
 io.on("connection", (socket) => {
     console.log("Client connected");

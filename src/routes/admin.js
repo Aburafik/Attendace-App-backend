@@ -1,8 +1,8 @@
-const express = require("express");
-const router = express.Router()
+// const express = require("express");
 
 const { register, 
         login, 
+        express,
         getAllAttendanceRecords, 
         getSingleRecord, 
         notifications, 
@@ -10,9 +10,11 @@ const { register,
 
 // const moment = require("moment");
 
+const router = express.Router()
 
 router.post("/register", register).post('/login', login).post("/create-employee", createEmployee);
-router.post("notifications", notifications)
+
+router.post("/notifications", notifications)
 router.get("/attendance/all-records", getAllAttendanceRecords)
 router.get("/attendance/:employeeId/records", getSingleRecord)
 
