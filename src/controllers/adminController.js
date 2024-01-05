@@ -4,7 +4,8 @@ const Employee = require("../models/Employee");
 const Notification = require('../models/notifications');
 const AttendanceRecord = require("../models/AttendanceReports");
 const bodyParser = require("body-parser");
-const express = require('express')
+const express = require('express');
+const { generateToken } = require("../config/jwt");
 const app = express();
 app.use(bodyParser.json());
 
@@ -90,13 +91,11 @@ const login = async (req, res) => {
       staffId: admin.staffId,
       role: admin.role,
       name: admin.name,
+      token: generateToken(admin?.id)
     };
-    const token = jwt.sign({ userId: user._id }, "secret-key", {
-      expiresIn: "365d",
-    });
     return res
       .status(200)
-      .json({ message: "Admin login successful.", user: user, token: token });
+      .json(user);
   } else {
     return res
       .status(401)
@@ -148,11 +147,11 @@ const createEmployee = async (req, res) => {
 const getAllAttendanceRecords = async (req, res) => {
   try {
     // Check if the logged-in user is an admin
-    const loggedInUserIsAdmin = req.user.isAdmin; // Assuming admin status is stored in req.user
+    // const loggedInUserIsAdmin = req.user.isAdmin; // Assuming admin status is stored in req.user
 
-    if (!loggedInUserIsAdmin) {
-      return res.status(403).send("Unauthorized");
-    }
+    // if (!loggedInUserIsAdmin) {
+    //   return res.status(403).send("Unauthorized");
+    // }
 
     // Retrieve attendance records for all employees
     const records = await AttendanceRecord.find().sort({ timestamp: "desc" });
