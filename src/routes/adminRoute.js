@@ -15,6 +15,6 @@ const { register,
 router.post("/register", register).post('/login', login).post("/create-employee", createEmployee);
 router.post("/notifications", notifications)
 router.get("/attendance/all-records", authMiddleware, isAdmin, getAllAttendanceRecords)
-router.get("/attendance/:employeeId/records", getSingleRecord)
+router.get("/attendance/employeeId", authMiddleware, isAdmin, getSingleRecord)
 
 module.exports = { router };
