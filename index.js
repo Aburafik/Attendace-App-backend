@@ -5,7 +5,7 @@ const bodyParser = require("body-parser");
 const morgan = require('morgan')
 require("./src/passport-config.js");
 const cors = require('cors')
-const { router} = require("./src/routes/admin");
+const { router } = require("./src/routes/adminRoute");
 const { connectToDb } = require('./src/dataBase/connectToDb.js')
 const app = require('express')()
 
@@ -48,7 +48,7 @@ app.use(passport.session());
 // app.use(corse);
 // Routes
 app.use("/api/admin", router);
-app.use("/api/employee", require("./src/routes/employee"));
+app.use("/api/employee", require("./src/routes/employeeRoute.js"));
 
 http.listen(port, () => {
   console.log(`Server is running on port ${port}`);

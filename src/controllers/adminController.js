@@ -146,12 +146,6 @@ const createEmployee = async (req, res) => {
 // Admin-only route to get attendance records of all employees
 const getAllAttendanceRecords = async (req, res) => {
   try {
-    // Check if the logged-in user is an admin
-    // const loggedInUserIsAdmin = req.user.isAdmin; // Assuming admin status is stored in req.user
-
-    // if (!loggedInUserIsAdmin) {
-    //   return res.status(403).send("Unauthorized");
-    // }
 
     // Retrieve attendance records for all employees
     const records = await AttendanceRecord.find().sort({ timestamp: "desc" });
@@ -165,15 +159,9 @@ const getAllAttendanceRecords = async (req, res) => {
 
 // Admin-only route to query attendance records for a particular employee
 const getSingleRecord = async (req, res) => {
-  const { employeeId } = req.params;
-
+  const { employeeId } = req.body;
+  //console.log(employeeId)
   try {
-    // Check if the logged-in user is an admin
-    const loggedInUserIsAdmin = req.user.isAdmin; // Assuming admin status is stored in req.user
-
-    if (!loggedInUserIsAdmin) {
-      return res.status(403).send("Unauthorized");
-    }
 
     // Retrieve attendance records for the specified employee
     const records = await AttendanceRecord.find({ employee: employeeId }).sort({
@@ -189,7 +177,6 @@ const getSingleRecord = async (req, res) => {
 
 const notifications = async (req, res) => {
   const { title, body } = req.body;
-  console.log(title)
   try {
     // Create a new notification
     const newNotification = new Notification({
