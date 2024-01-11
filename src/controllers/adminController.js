@@ -189,6 +189,7 @@ const getAllLeaveRequests = async (req, res) => {
   }
 }
 
+//manage leave request
 const manageleaveRequest = async (req, res) => {
   const _Id = req.params.id
 
