@@ -8,7 +8,8 @@ const { register,
         getSingleRecord, 
         notifications, 
         createEmployee, 
-        manageleaveRequest} = require('../controllers/adminController')
+        manageleaveRequest,
+        getAllLeaveRequests} = require('../controllers/adminController')
 
 // const moment = require("moment");
 
@@ -17,6 +18,7 @@ router.post("/register", register).post('/login', login).post("/create-employee"
 router.post("/notifications", notifications)
 router.get("/attendance/all-records", authMiddleware, isAdmin, getAllAttendanceRecords)
 router.get("/attendance/employeeId", authMiddleware, isAdmin, getSingleRecord)
-router.get("/manage-leave-Request", authMiddleware, isAdmin, manageleaveRequest)
+router.get("/manage-leave-Request", authMiddleware, isAdmin, getAllLeaveRequests)
+router.put("/manage-leave-Request/:id", authMiddleware, isAdmin, manageleaveRequest)
 
 module.exports = { router };

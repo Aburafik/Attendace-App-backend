@@ -315,6 +315,8 @@ const leaveRequest = async (req, res) => {
         reason,
         startDate,
         endDate,
+        status: "Pending"
+
       });
       
       await newRequest.save();

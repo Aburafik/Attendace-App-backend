@@ -176,58 +176,52 @@ const getSingleRecord = async (req, res) => {
   }
 };
 
+const getAllLeaveRequests = async (req, res) => {
+  try {
+    const allReqs = await LeaveRequest.find()
+    if (!allReqs) {
+      res.json({ msg: "There are no leave Request"})
+    }
+
+    res.json(allReqs)
+  } catch (err) {
+    throw new Error(err)
+  }
+}
+
 const manageleaveRequest = async (req, res) => {
-  const { reqId } = req.user
+  const _Id = req.params.id
 
-  const { startDate, endDate, reason, status } = req.body
+  const { Approval, Rejection} = req.body
 
-  //check if there is a leave request
-  const leavereq = await LeaveRequest.findById(reqId)
+  //check if there leave request is valid
+  const leavereq = await LeaveRequest.findById(_Id)
 
   if (!leavereq) {
-    return res.json({ err: 'There is no leave request associated with that particular id'})
+    return res.status(500).json({ err: 'There is no leave request associated with that particular id'})
   }
 
   try {
 
-    if (leavereq.status === "Approved") {
-      res.json({ msg: "Leave request has already been approved"})
-    } else {
-      // Approve a leave request
-      const approval = await leavereq.updateOne({
-        $push: {status: "Approved"},
+    if (Approval) {
+      const approved = await leavereq.updateOne({
+        status: Approval,
         new: true
       })
-      res.json(approval)
-    }
+      return res.json(approved).status(200)
 
-    // Reject leave request
-    if (leavereq.status === "Rejected") {
-      res.json({ msg: "Leave request has already been Rejected"})
-    } else {
-      const reject = await leavereq.updateOne({
-        $push: { status: "Rejected"},
+    } else if (Rejection) {
+      const rejected = await leavereq.updateOne({
+        status: Rejection,
         new: true
       })
-      res.json(reject)
+      return res.json(rejected).status(200)
     }
 
   } catch (err) {
-    throw new Error(err)
+    console.log(err)
   }
-  
 
-
-  io.on('connection', socket => {
-    console.log('A user connected')
-    socket.on('newRequest', newNotification => {
-      if (newNotification){
-        res.json(newNotification)
-      } else {
-        res.json({ msg: "You have no notification yet"})
-      }
-    })
-  }) 
 }
 
 const notifications = async (req, res) => {
@@ -260,6 +254,7 @@ module.exports = { register,
                     notifications, 
                     getAllAttendanceRecords,
                     manageleaveRequest,
+                    getAllLeaveRequests,
                     getSingleRecord,
                     express,
                     io, 
