@@ -309,27 +309,30 @@ const leaveRequest = async (req, res) => {
     const { reason, startDate, endDate , employeeId} = req.body;
   
     try {  
-      // Create a new leave request
-      const newRequest = new LeaveRequest({
-        employee: employeeId,
-        reason,
-        startDate,
-        endDate,
-        status: "Pending"
 
-      });
-      
-      await newRequest.save();
-
-      if(newRequest) {
-        io.emit('newRequest', newRequest, () => {
-          console.log('notification sent')
-        })
+      if (!reason || !startDate || !endDate || !employeeId) {
+        res.json({ msg: "Please enter all fields" })
       } else {
-        throw new Error('unexpected error')
-      }
-      
-      res.status(201).json({message: "Your leave request has been submitted successfully",newRequest});
+          // Create a new leave request
+          const newRequest = new LeaveRequest({
+            employee: employeeId,
+            reason,
+            startDate,
+            endDate,
+            status: "Pending"
+          });
+
+          await newRequest.save();
+          res.status(201).json({message: "Your leave request has been submitted successfully",newRequest});
+        }
+
+      // if(newRequest) {
+      //   io.emit('newRequest', newRequest, () => {
+      //     console.log('notification sent')
+      //   })
+      // } else {
+      //   throw new Error('unexpected error')
+      // }
     } catch (err) {
       console.error("Error creating leave request", err);
       res.status(500).json({message:"Error creating leave request"});
