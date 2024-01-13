@@ -190,6 +190,21 @@ const notifications = async (req, res) => {
   }
 };
 
+
+// Admin-only route to get attendance records of all employees
+const getAllLeaveRequest = async (req, res) => {
+          try {
+            // Retrieve leave records for all employees
+            const leaveRecords = await Leave.find().sort({ timestamp: "desc" });
+        
+            res.status(200).json(leaveRecords);
+          } catch (err) {
+            console.error("Error retrieving leave records", err);
+            res.status(500).send("Error retrieving leave records");
+          }
+        };
+
+
 const updateEmployeeLeaveRequest = async (req, res) => {
   try {
     const { status } = req.body;
@@ -215,6 +230,7 @@ module.exports = {
   getAllAttendanceRecords,
   getSingleRecord,
   updateEmployeeLeaveRequest,
+  getAllLeaveRequest,
   express,
   io,
   http,
