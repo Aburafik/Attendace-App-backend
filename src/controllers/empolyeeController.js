@@ -335,6 +335,7 @@ const leaveRequest = async (req, res) => {
       reason,
       startDate,
       endDate,
+      status: "pending"
     });
 
     await newRequest.save();
@@ -342,13 +343,37 @@ const leaveRequest = async (req, res) => {
       .status(201)
       .json({
         message: "Your leave request has been submitted successfully",
-        newRequest,
+        newRequest
       });
   } catch (err) {
     console.error("Error creating leave request", err);
     res.status(500).json({ message: "Error creating leave request" });
   }
 };
+/////////GET Leave Histroy
+
+const getEmployeeLeaveHistory = async (req, res) => {
+          const { employeeId } = req.params;
+        
+          try {
+            const records = await LeaveRequest.find({ employee: employeeId }).sort({
+              timestamp: "desc",
+            });
+        
+            res.status(200).json(records);
+          } catch (err) {
+            console.error("Error retrieving leave history", err);
+            res.status(500).send("Error retrieving leave history");
+          }
+        };
+
+
+
+
+
+
+
+
 
 const editLeaveRequest = async (req, res) => {
   const { content, leaveType, startDate, endDate } = req.body;
@@ -440,6 +465,7 @@ module.exports = {
   leaveRequest,
   editLeaveRequest,
   deleteALeaveRequest,
-  getTodayCreatedTask
+  getTodayCreatedTask,
+  getEmployeeLeaveHistory
 };
 //https://www.behance.net/gallery/184583919/Employee-Attendance-Management-App-Design?tracking_source=search_projects

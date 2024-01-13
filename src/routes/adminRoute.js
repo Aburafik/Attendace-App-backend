@@ -6,6 +6,7 @@ const { register,
         login, 
         getAllAttendanceRecords, 
         getSingleRecord, 
+        updateEmployeeLeaveRequest,
         notifications, 
         createEmployee } = require('../controllers/adminController')
 
@@ -16,5 +17,6 @@ router.post("/register", register).post('/login', login).post("/create-employee"
 router.post("/notifications", notifications)
 router.get("/attendance/all-records", authMiddleware, isAdmin, getAllAttendanceRecords)
 router.get("/attendance/employeeId", authMiddleware, isAdmin, getSingleRecord)
+router.patch("/update-leave/:leaveId", authMiddleware, isAdmin, updateEmployeeLeaveRequest)
 
 module.exports = { router };

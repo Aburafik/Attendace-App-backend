@@ -1,23 +1,19 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Employee = require("../models/Employee");
-const Notification = require('../models/notifications');
+const Leave= require("../models/LeaveRequest");
+const Notification = require("../models/notifications");
 const AttendanceRecord = require("../models/AttendanceReports");
 const bodyParser = require("body-parser");
-const express = require('express');
+const express = require("express");
 const { generateToken } = require("../config/jwt");
 const app = express();
 app.use(bodyParser.json());
 
-
-
-const http = require('http').Server(app);
-const io = require('socket.io')(http); 
-
-
+const http = require("http").Server(app);
+const io = require("socket.io")(http);
 
 // const moment = require("moment");
-
 
 const register = async (req, res) => {
   const { email, staffId, name, password, role } = req.body;
@@ -63,10 +59,10 @@ const register = async (req, res) => {
       role: newAdmin.role,
       password: newAdmin.password,
       isAdmin: newAdmin.isAdmin,
-      token: token
+      token: token,
     };
 
-    res.status(201).json(newUser)
+    res.status(201).json(newUser);
   } catch (err) {
     res.status(500).send("Error registering admin.");
   }
@@ -91,11 +87,9 @@ const login = async (req, res) => {
       staffId: admin.staffId,
       role: admin.role,
       name: admin.name,
-      token: generateToken(admin?.id)
+      token: generateToken(admin?.id),
     };
-    return res
-      .status(200)
-      .json(user);
+    return res.status(200).json(user);
   } else {
     return res
       .status(401)
@@ -146,7 +140,6 @@ const createEmployee = async (req, res) => {
 // Admin-only route to get attendance records of all employees
 const getAllAttendanceRecords = async (req, res) => {
   try {
-
     // Retrieve attendance records for all employees
     const records = await AttendanceRecord.find().sort({ timestamp: "desc" });
 
@@ -162,7 +155,6 @@ const getSingleRecord = async (req, res) => {
   const { employeeId } = req.body;
   //console.log(employeeId)
   try {
-
     // Retrieve attendance records for the specified employee
     const records = await AttendanceRecord.find({ employee: employeeId }).sort({
       timestamp: "desc",
@@ -187,7 +179,7 @@ const notifications = async (req, res) => {
     await newNotification.save();
 
     // Broadcast the new notification to all connected employees
-//   const notifications = await Notification.find()
+    //   const notifications = await Notification.find()
 
     io.emit("newNotification", newNotification);
     res.status(201).json(newNotification);
@@ -197,15 +189,34 @@ const notifications = async (req, res) => {
     res.status(500).send("Error creating notification ");
   }
 };
+
+const updateEmployeeLeaveRequest = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const leaveId = req.params.leaveId;
+
+    // Update the leave request status
+    await Leave.findByIdAndUpdate(leaveId, { status });
+
+    res.json({ message: "Leave request updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 // app.use("/api/admin", router);
 
-module.exports = { register, 
-                    login, 
-                    createEmployee, 
-                    notifications, 
-                    getAllAttendanceRecords,
-                    getSingleRecord,
-                    express,
-                    io, 
-                    http,
-                    app };
+module.exports = {
+  register,
+  login,
+  createEmployee,
+  notifications,
+  getAllAttendanceRecords,
+  getSingleRecord,
+  updateEmployeeLeaveRequest,
+  express,
+  io,
+  http,
+  app,
+};
