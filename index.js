@@ -4,6 +4,7 @@ const passport = require("passport");
 const bodyParser = require("body-parser");
 const morgan = require('morgan')
 require("./src/passport-config.js");
+const httpProxy = require('http-proxy');
 const cors = require('cors')
 const { router } = require("./src/routes/adminRoute");
 const {app, http, io}= require('./src/controllers/adminController.js');
@@ -50,6 +51,18 @@ app.use(passport.session());
 // Routes
 app.use("/api/admin", router);
 app.use("/api/employee", require("./src/routes/employeeRoute.js"));
+
+const proxy = httpProxy.createProxyServer({
+  target: 'https://calm-puce-monkey-shoe.cyclic.app', // Target your Node.js server
+  ws: true, // Enable WebSocket support
+});
+
+// Start the reverse proxy
+proxy.listen(8, () => {
+  console.log('Proxy server listening on port 80');
+});
+
+
 
 http.listen(port, () => {
   console.log(`Server is running on port ${port}`);

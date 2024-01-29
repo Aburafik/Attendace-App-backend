@@ -367,14 +367,6 @@ const getEmployeeLeaveHistory = async (req, res) => {
           }
         };
 
-
-
-
-
-
-
-
-
 const editLeaveRequest = async (req, res) => {
   const { content, leaveType, startDate, endDate } = req.body;
   const { requestId } = req.params;
@@ -405,7 +397,7 @@ const editLeaveRequest = async (req, res) => {
     }
 
     // Update the leave request
-    existingRequest.reason = reason;
+    existingRequest.reason = content;
     existingRequest.leaveType = leaveType;
     existingRequest.startDate = startDate;
     existingRequest.endDate = endDate;
