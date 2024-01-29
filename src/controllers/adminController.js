@@ -9,10 +9,13 @@ const express = require("express");
 const { generateToken } = require("../config/jwt");
 const app = express();
 app.use(bodyParser.json());
-
-const http = require("http").Server(app);
-const io = require("socket.io")(http);
-
+const socketIO = require('socket.io');
+const http = require("http")
+// const io = require("socket.io")(http);
+const server = http.createServer(app);
+const io = socketIO(server, {
+  transports: ['websocket'], // Enable only WebSocket transport
+});
 // const moment = require("moment");
 
 const register = async (req, res) => {
@@ -233,6 +236,6 @@ module.exports = {
   getAllLeaveRequest,
   express,
   io,
-  http,
+  server,
   app,
 };
