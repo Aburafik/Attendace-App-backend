@@ -6,7 +6,8 @@ const leaveRequestSchema = new mongoose.Schema({
   startDate: Date,
   endDate: Date,
   reason: String,
-  leavetype: String,
+  leaveType: String,
+  timeStamp:Date,
   status: String, // 'Pending', 'Approved', 'Rejected', etc.
 });
 

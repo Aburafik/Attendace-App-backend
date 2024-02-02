@@ -336,7 +336,8 @@ const leaveRequest = async (req, res) => {
       leaveType,
       startDate,
       endDate,
-      status: "pending"
+      status: "pending", 
+      timeStamp: new Date
     });
 
     await newRequest.save();
@@ -414,12 +415,10 @@ const deleteALeaveRequest = async (req, res) => {
 
   try {
     // Retrieve the logged-in employee (you should have authentication in place)
-    const employeeId = req.user.id;
 
     // Check if the leave request exists and is associated with the logged-in employee
     const existingRequest = await LeaveRequest.findOne({
       _id: requestId,
-      employee: employeeId,
     });
 
     if (!existingRequest) {
@@ -437,11 +436,11 @@ const deleteALeaveRequest = async (req, res) => {
     }
 
     // Delete the leave request
-    await existingRequest.remove();
-    res.status(204).send();
+    await existingRequest.deleteOne();
+    res.status(204).json({message:"Leave request deleted successfully"});
   } catch (err) {
-    console.error("Error deleting leave request", err);
-    res.status(500).send("Error deleting leave request");
+    console.log("Error deleting leave request", err);
+    res.status(500).json({message: "Error deleting leave request"});
   }
 };
 
