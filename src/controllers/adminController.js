@@ -20,9 +20,9 @@ const io = socketIO(server, {
 
 const register = async (req, res) => {
   const { email, staffId, name, password, role } = req.body;
-  // Check if the email is already takenR
+  // Check if the email is already taken
   const existingAdmin = await Employee.findOne({ email, isAdmin: true });
-  // Check if employee is Id is already taken
+  // Check if employee  Id is already taken
   const existingEmployeeId = await Employee.findOne({ staffId, isAdmin: true });
 
   if (existingAdmin) {

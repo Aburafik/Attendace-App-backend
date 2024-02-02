@@ -47,14 +47,14 @@ router.patch("/task/edit/:reportId", editTaskReport);
 router.delete("/delete-task/:reportId", deleteATaskReport);
 
 ///Requst leave
-router.post("/leave-requests", leaveRequest);
+router.post("/leave-request", leaveRequest);
 
 ///GET Leave Request History
 router.get("/leave-history/:employeeId", getEmployeeLeaveHistory);
 
 // Edit a leave request
-router.patch("/leave-requests/:requestId", editLeaveRequest);
+router.patch("/leave-request/:requestId", editLeaveRequest);
 // Delete a leave request
-router.delete("/leave-requests/:requestId", deleteALeaveRequest);
+router.delete("/leave-request/:requestId", deleteALeaveRequest);
 
 module.exports = router;
