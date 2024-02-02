@@ -369,12 +369,11 @@ const getEmployeeLeaveHistory = async (req, res) => {
         };
 
 const editLeaveRequest = async (req, res) => {
-  const { reason, leaveType, startDate, endDate } = req.body;
+  const { reason, leaveType, startDate, endDate, employeeId } = req.body;
   const { requestId } = req.params;
 
   try {
     // Retrieve the logged-in employee (you should have authentication in place)
-    const employeeId = req.user.id;
 
     // Check if the leave request exists and is associated with the logged-in employee
     const existingRequest = await LeaveRequest.findOne({
