@@ -18,9 +18,6 @@ app.use(morgan('dev'))
 
 connectToDb()
 
-// const server = require('server').Server(app);
-// const io = require('socket.io')(server); 
-
 io.on("connection", (socket) => {
     console.log("Client connected");
   
@@ -47,21 +44,9 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-// app.use(corse);
-// Routes
+
 app.use("/api/admin", router);
 app.use("/api/employee", require("./src/routes/employeeRoute.js"));
-
-// const proxy = httpProxy.createProxyServer({
-//   target: 'https://calm-puce-monkey-shoe.cyclic.app', // Target your Node.js server
-//   ws: true, // Enable WebSocket support
-// });
-
-// // Start the reverse proxy
-// proxy.listen(8, () => {
-//   console.log('Proxy server listening on port 80');
-// });
-
 
 
 server.listen(port, () => {

@@ -252,7 +252,7 @@ const editTaskReport = async (req, res) => {
       });
     }
 
-    // Update the content of the task report
+    // Update the reason of the task report
     existingReport.description = description;
     existingReport.title = title;
     await existingReport.save();
@@ -326,13 +326,14 @@ const deleteATaskReport = async (req, res) => {
 };
 
 const leaveRequest = async (req, res) => {
-  const { reason, startDate, endDate, employeeId } = req.body;
+  const { reason, startDate, endDate,leaveType, employeeId } = req.body;
 
   try {
     // Create a new leave request
     const newRequest = new LeaveRequest({
       employee: employeeId,
       reason,
+      leaveType,
       startDate,
       endDate,
       status: "pending"
@@ -368,7 +369,7 @@ const getEmployeeLeaveHistory = async (req, res) => {
         };
 
 const editLeaveRequest = async (req, res) => {
-  const { content, leaveType, startDate, endDate } = req.body;
+  const { reason, leaveType, startDate, endDate } = req.body;
   const { requestId } = req.params;
 
   try {
@@ -397,7 +398,7 @@ const editLeaveRequest = async (req, res) => {
     }
 
     // Update the leave request
-    existingRequest.reason = content;
+    existingRequest.reason = reason;
     existingRequest.leaveType = leaveType;
     existingRequest.startDate = startDate;
     existingRequest.endDate = endDate;
