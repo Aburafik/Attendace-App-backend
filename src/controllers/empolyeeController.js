@@ -474,7 +474,7 @@ const createNewReport = async (req, res) => {
      // Check if the employee has already submitted a report for the given week and month
      const existingReport = report.weeklyReports.find(report => report.month === month && report.week === week);
      if (existingReport) {
-       return res.status(400).json({ error: 'Report already submitted for this week' });
+       return res.status(400).json({ message: 'Report already submitted for this week' });
      }
     // Check if the employee already has four reports for the current month
     if (report.weeklyReports.length >= 4) {
@@ -499,7 +499,7 @@ const createNewReport = async (req, res) => {
     res.status(201).json({ message: "Report submitted successfully",report });
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: "Internal Server Error" });
+    res.status(500).json({ message: "Internal Server Error" });
   }
 };
 
