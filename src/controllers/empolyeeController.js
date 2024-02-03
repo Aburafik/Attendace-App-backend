@@ -1,5 +1,6 @@
 const Employee = require("../models/Employee");
 const Task = require("../models/Task");
+const Reports = require("../models/reports");
 const AttendanceRecord = require("../models/AttendanceReports");
 const LeaveRequest = require("../models/LeaveRequest");
 const moment = require("moment");
@@ -269,22 +270,22 @@ const editTask = async (req, res) => {
 ///Get Task created today
 
 const getTodayCreatedTask = async (req, res) => {
-           // Retrieve the logged-in employee (you should have authentication in place)
-    const {employeeId} = req.params;
+  // Retrieve the logged-in employee (you should have authentication in place)
+  const { employeeId } = req.params;
   try {
-   
-
     const today = new Date();
     // Set time to the beginning of the day
     today.setHours(0, 0, 0, 0);
-    
+
     // Find tasks created by the employee for today
     const tasks = await Task.find({
       employee: employeeId,
       timestamp: { $gte: today },
     });
 
-    res.status(200).json({"message":"Todays task retrieved successfully", "task":tasks});
+    res
+      .status(200)
+      .json({ message: "Todays task retrieved successfully", task: tasks });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Internal Server Error" });
@@ -326,7 +327,7 @@ const deleteATask = async (req, res) => {
 };
 
 const leaveRequest = async (req, res) => {
-  const { reason, startDate, endDate,leaveType, employeeId } = req.body;
+  const { reason, startDate, endDate, leaveType, employeeId } = req.body;
 
   try {
     // Create a new leave request
@@ -336,17 +337,15 @@ const leaveRequest = async (req, res) => {
       leaveType,
       startDate,
       endDate,
-      status: "pending", 
-      timeStamp: new Date
+      status: "pending",
+      timeStamp: new Date(),
     });
 
     await newRequest.save();
-    res
-      .status(201)
-      .json({
-        message: "Your leave request has been submitted successfully",
-        newRequest
-      });
+    res.status(201).json({
+      message: "Your leave request has been submitted successfully",
+      newRequest,
+    });
   } catch (err) {
     console.error("Error creating leave request", err);
     res.status(500).json({ message: "Error creating leave request" });
@@ -355,19 +354,19 @@ const leaveRequest = async (req, res) => {
 /////////GET Leave Histroy
 
 const getEmployeeLeaveHistory = async (req, res) => {
-          const { employeeId } = req.params;
-        
-          try {
-            const records = await LeaveRequest.find({ employee: employeeId }).sort({
-              timestamp: "desc",
-            });
-        
-            res.status(200).json(records);
-          } catch (err) {
-            console.error("Error retrieving leave history", err);
-            res.status(500).send("Error retrieving leave history");
-          }
-        };
+  const { employeeId } = req.params;
+
+  try {
+    const records = await LeaveRequest.find({ employee: employeeId }).sort({
+      timestamp: "desc",
+    });
+
+    res.status(200).json(records);
+  } catch (err) {
+    console.error("Error retrieving leave history", err);
+    res.status(500).send("Error retrieving leave history");
+  }
+};
 
 const editLeaveRequest = async (req, res) => {
   const { reason, leaveType, startDate, endDate, employeeId } = req.body;
@@ -389,12 +388,10 @@ const editLeaveRequest = async (req, res) => {
     // Check if the request's start date is in the future
     const today = moment().startOf("day");
     if (moment(existingRequest.startDate).isBefore(today)) {
-      return res
-        .status(403)
-        .json({
-          message:
-            "Leave request can only be edited if the start date is in the future",
-        });
+      return res.status(403).json({
+        message:
+          "Leave request can only be edited if the start date is in the future",
+      });
     }
 
     // Update the leave request
@@ -403,10 +400,13 @@ const editLeaveRequest = async (req, res) => {
     existingRequest.startDate = startDate;
     existingRequest.endDate = endDate;
     await existingRequest.save();
-    res.status(200).json( { message:"Your leave request has been updated successfully",existingRequest});
+    res.status(200).json({
+      message: "Your leave request has been updated successfully",
+      existingRequest,
+    });
   } catch (err) {
     console.error("Error editing leave request", err);
-    res.status(500).json({message:"Error editing leave request"});
+    res.status(500).json({ message: "Error editing leave request" });
   }
 };
 
@@ -437,10 +437,69 @@ const deleteALeaveRequest = async (req, res) => {
 
     // Delete the leave request
     await existingRequest.deleteOne();
-    res.status(204).json({message:"Leave request deleted successfully"});
+    res.status(204).json({ message: "Leave request deleted successfully" });
   } catch (err) {
     console.log("Error deleting leave request", err);
-    res.status(500).json({message: "Error deleting leave request"});
+    res.status(500).json({ message: "Error deleting leave request" });
+  }
+};
+
+/////REPORTSS
+
+const createNewReport = async (req, res) => {
+  try {
+    const { month, week, title, body , id} = req.body;
+    const employeeId = id; 
+
+    // Find the employee by ID
+    const employee = await Employee.findById(employeeId);
+
+    if (!employee) {
+      return res.status(404).json({ error: "Employee not found" });
+    }
+
+    // Find or create the report document for the current month
+    let report = await Reports.findOne({
+      employee: employeeId,
+      "weeklyReports.month": month,
+    });
+     // Check if the employee has already submitted a report for the given week and month
+ const existingReport = report.weeklyReports.find(report => report.month === month && report.week === week);
+ if (existingReport) {
+   return res.status(400).json({ error: 'Report already submitted for this week' });
+ }
+    if (!report) {
+      // If the report document for the current month doesn't exist, create it
+      report = new Reports({
+        employee: employeeId,
+        weeklyReports: [],
+      });
+    }
+
+    // Check if the employee already has four reports for the current month
+    if (report.weeklyReports.length >= 4) {
+      return res
+        .status(400)
+        .json({message: "Maximum reports for the month reached" });
+    }
+   
+    // Add the new report to the weeklyReports array
+    report.weeklyReports.push({
+      month,
+      week,
+      title,
+      body,
+      timeStamp: new Date(),
+      status: "Pending",
+    });
+
+    // Save the report document
+    await report.save();
+
+    res.status(201).json({ message: "Report submitted successfully",report });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
   }
 };
 
@@ -457,6 +516,7 @@ module.exports = {
   editLeaveRequest,
   deleteALeaveRequest,
   getTodayCreatedTask,
-  getEmployeeLeaveHistory
+  getEmployeeLeaveHistory,
+  createNewReport,
 };
 //https://www.behance.net/gallery/184583919/Employee-Attendance-Management-App-Design?tracking_source=search_projects

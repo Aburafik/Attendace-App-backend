@@ -15,7 +15,9 @@ const {
   deleteALeaveRequest,
   getTodayCreatedTask,
   getEmployeeLeaveHistory,
+  createNewReport
 } = require("../controllers/empolyeeController");
+const { create } = require("../models/Employee");
 
 // Import the Employee model
 
@@ -56,5 +58,8 @@ router.get("/leave-history/:employeeId", getEmployeeLeaveHistory);
 router.patch("/leave-request/update/:requestId", editLeaveRequest);
 // Delete a leave request
 router.delete("/leave-request/delete/:requestId", deleteALeaveRequest);
+
+router.post("/new-report", createNewReport);
+
 
 module.exports = router;
