@@ -463,11 +463,7 @@ const createNewReport = async (req, res) => {
       employee: employeeId,
       "weeklyReports.month": month,
     });
-     // Check if the employee has already submitted a report for the given week and month
- const existingReport = report.weeklyReports.find(report => report.month === month && report.week === week);
- if (existingReport) {
-   return res.status(400).json({ error: 'Report already submitted for this week' });
- }
+
     if (!report) {
       // If the report document for the current month doesn't exist, create it
       report = new Reports({
@@ -475,7 +471,11 @@ const createNewReport = async (req, res) => {
         weeklyReports: [],
       });
     }
-
+     // Check if the employee has already submitted a report for the given week and month
+     const existingReport = report.weeklyReports.find(report => report.month === month && report.week === week);
+     if (existingReport) {
+       return res.status(400).json({ error: 'Report already submitted for this week' });
+     }
     // Check if the employee already has four reports for the current month
     if (report.weeklyReports.length >= 4) {
       return res
