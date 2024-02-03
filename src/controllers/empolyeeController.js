@@ -1,5 +1,5 @@
 const Employee = require("../models/Employee");
-const TaskReport = require("../models/TaskReport");
+const Task = require("../models/Task");
 const AttendanceRecord = require("../models/AttendanceReports");
 const LeaveRequest = require("../models/LeaveRequest");
 const moment = require("moment");
@@ -196,7 +196,7 @@ const createTask = async (req, res) => {
 
   try {
     // Create a new task report
-    const newReport = new TaskReport({
+    const newReport = new Task({
       employee: employeeId,
       title,
       description,
@@ -214,7 +214,7 @@ const getEmployeeTaskHistory = async (req, res) => {
   const { employeeId } = req.params;
 
   try {
-    const records = await TaskReport.find({ employee: employeeId }).sort({
+    const records = await Task.find({ employee: employeeId }).sort({
       timestamp: "desc",
     });
 
@@ -225,7 +225,7 @@ const getEmployeeTaskHistory = async (req, res) => {
   }
 };
 
-const editTaskReport = async (req, res) => {
+const editTask = async (req, res) => {
   const { title, description, employeeId } = req.body;
   const { reportId } = req.params;
 
@@ -234,18 +234,18 @@ const editTaskReport = async (req, res) => {
     //     const employeeId = req.user.id;
 
     // Check if the task report exists and is associated with the logged-in employee
-    const existingReport = await TaskReport.findOne({
+    const existingTask = await Task.findOne({
       _id: reportId,
       employee: employeeId,
     });
 
-    if (!existingReport) {
+    if (!existingTask) {
       return res.status(404).json({ message: "Task report not found" });
     }
 
     // Check if the task report was created on the same day
     const today = moment().startOf("day");
-    if (!moment(existingReport.timestamp).isSame(today, "day")) {
+    if (!moment(existingTask.timestamp).isSame(today, "day")) {
       return res.status(403).json({
         message:
           "Task report can only be edited on the same day it was created",
@@ -253,12 +253,12 @@ const editTaskReport = async (req, res) => {
     }
 
     // Update the reason of the task report
-    existingReport.description = description;
-    existingReport.title = title;
-    await existingReport.save();
+    existingTask.description = description;
+    existingTask.title = title;
+    await existingTask.save();
     res.status(200).json({
       message: "The task has been updated successfully",
-      existingReport,
+      existingTask,
     });
   } catch (err) {
     console.error("Error editing task report", err);
@@ -279,7 +279,7 @@ const getTodayCreatedTask = async (req, res) => {
     today.setHours(0, 0, 0, 0);
     
     // Find tasks created by the employee for today
-    const tasks = await TaskReport.find({
+    const tasks = await Task.find({
       employee: employeeId,
       timestamp: { $gte: today },
     });
@@ -291,7 +291,7 @@ const getTodayCreatedTask = async (req, res) => {
   }
 };
 
-const deleteATaskReport = async (req, res) => {
+const deleteATask = async (req, res) => {
   const { reportId } = req.params;
 
   try {
@@ -299,25 +299,25 @@ const deleteATaskReport = async (req, res) => {
     const employeeId = req.user.id;
 
     // Check if the task report exists and is associated with the logged-in employee
-    const existingReport = await TaskReport.findOne({
+    const existingTask = await Task.findOne({
       _id: reportId,
       employee: employeeId,
     });
 
-    if (!existingReport) {
+    if (!existingTask) {
       return res.status(404).send("Task report not found");
     }
 
-    // Check if the task report was created on the same day
+    // Check if the task was created on the same day
     const today = moment().startOf("day");
-    if (!moment(existingReport.timestamp).isSame(today, "day")) {
+    if (!moment(existingTask.timestamp).isSame(today, "day")) {
       return res
         .status(403)
         .send("Task report can only be deleted on the same day it was created");
     }
 
-    // Delete the task report
-    await existingReport.remove();
+    // Delete the task
+    await existingTask.remove();
     res.status(204).send();
   } catch (err) {
     console.error("Error deleting task report", err);
@@ -451,8 +451,8 @@ module.exports = {
   getSingleEmployeeAttendancRecords,
   createTask,
   getEmployeeTaskHistory,
-  editTaskReport,
-  deleteATaskReport,
+  editTask,
+  deleteATask,
   leaveRequest,
   editLeaveRequest,
   deleteALeaveRequest,

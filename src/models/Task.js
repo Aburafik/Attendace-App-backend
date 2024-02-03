@@ -1,7 +1,7 @@
 // src/models/TaskReport.js
 const mongoose = require("mongoose");
 
-const taskReportSchema = new mongoose.Schema({
+const taskSchema = new mongoose.Schema({
   employee: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "Employee",
@@ -21,4 +21,4 @@ const taskReportSchema = new mongoose.Schema({
   },
 });
 
-module.exports = mongoose.model("TaskReport", taskReportSchema);
+module.exports = mongoose.model("Task", taskSchema);

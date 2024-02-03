@@ -8,8 +8,8 @@ const {
   getSingleEmployeeAttendancRecords,
   createTask,
   getEmployeeTaskHistory,
-  editTaskReport,
-  deleteATaskReport,
+  editTask,
+  deleteATask,
   leaveRequest,
   editLeaveRequest,
   deleteALeaveRequest,
@@ -41,10 +41,10 @@ router.get("/task/:employeeId", getEmployeeTaskHistory);
 router.get("/task/today/:employeeId", getTodayCreatedTask);
 
 // Edit a task report
-router.patch("/task/edit/:reportId", editTaskReport);
+router.patch("/task/edit/:reportId", editTask);
 
 // Delete a task report
-router.delete("/delete-task/:reportId", deleteATaskReport);
+router.delete("/delete-task/:reportId", deleteATask);
 
 ///Requst leave
 router.post("/leave-request", leaveRequest);
