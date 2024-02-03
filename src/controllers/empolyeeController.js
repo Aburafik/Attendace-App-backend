@@ -403,10 +403,10 @@ const editLeaveRequest = async (req, res) => {
     existingRequest.startDate = startDate;
     existingRequest.endDate = endDate;
     await existingRequest.save();
-    res.status(200).json(existingRequest);
+    res.status(200).json( { message:"Your leave request has been updated successfully",existingRequest});
   } catch (err) {
     console.error("Error editing leave request", err);
-    res.status(500).send("Error editing leave request");
+    res.status(500).json({message:"Error editing leave request"});
   }
 };
 
