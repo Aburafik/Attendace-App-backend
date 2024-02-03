@@ -503,6 +503,26 @@ const createNewReport = async (req, res) => {
   }
 };
 
+
+const getEmployeeReports=async(req,res)=>{
+const {employeeId}=req.params;
+try {
+
+       const employee=await Reports.find({employee:employeeId});
+       
+       if(!employee){
+
+          res.status(500).json({message:"Employee not found"})
+       }
+
+       res.status(200).json({reports:employee})
+          
+} catch (error) {
+          
+}
+
+}
+
 module.exports = {
   loginEmployee,
   clockin,
@@ -518,5 +538,6 @@ module.exports = {
   getTodayCreatedTask,
   getEmployeeLeaveHistory,
   createNewReport,
+  getEmployeeReports
 };
 //https://www.behance.net/gallery/184583919/Employee-Attendance-Management-App-Design?tracking_source=search_projects
