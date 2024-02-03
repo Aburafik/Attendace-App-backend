@@ -53,8 +53,8 @@ router.post("/leave-request", leaveRequest);
 router.get("/leave-history/:employeeId", getEmployeeLeaveHistory);
 
 // Edit a leave request
-router.patch("/leave-request/:requestId", editLeaveRequest);
+router.patch("/leave-request/update/:requestId", editLeaveRequest);
 // Delete a leave request
-router.delete("/leave-request/:requestId", deleteALeaveRequest);
+router.delete("/leave-request/delete/:requestId", deleteALeaveRequest);
 
 module.exports = router;
