@@ -171,12 +171,13 @@ const getSingleRecord = async (req, res) => {
 };
 
 const notifications = async (req, res) => {
-  const { title, body } = req.body;
+  const { title, body, to } = req.body;
   try {
     // Create a new notification
     const newNotification = new Notification({
       title,
       body,
+      to
     });
 
     await newNotification.save();
