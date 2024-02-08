@@ -1,31 +1,28 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const Employee = require("../models/Employee");
-const Notification = require('../models/notifications');
+const Leave= require("../models/LeaveRequest");
+const Notification = require("../models/notifications");
 const AttendanceRecord = require("../models/AttendanceReports");
 const bodyParser = require("body-parser");
-const express = require('express');
+const express = require("express");
 const { generateToken } = require("../config/jwt");
-const LeaveRequest = require('../models/LeaveRequest')
-const { Socket } = require("dgram");
 const app = express();
 app.use(bodyParser.json());
-
-
-
-const http = require('http').Server(app);
-const io = require('socket.io')(http); 
-
-
-
+const socketIO = require('socket.io');
+const http = require("http")
+// const io = require("socket.io")(http);
+const server = http.createServer(app);
+const io = socketIO(server, {
+  transports: ['websocket'], // Enable only WebSocket transport
+});
 // const moment = require("moment");
-
 
 const register = async (req, res) => {
   const { email, staffId, name, password, role } = req.body;
   // Check if the email is already taken
   const existingAdmin = await Employee.findOne({ email, isAdmin: true });
-  // Check if employee is Id is already taken
+  // Check if employee  Id is already taken
   const existingEmployeeId = await Employee.findOne({ staffId, isAdmin: true });
 
   if (existingAdmin) {
@@ -65,10 +62,10 @@ const register = async (req, res) => {
       role: newAdmin.role,
       password: newAdmin.password,
       isAdmin: newAdmin.isAdmin,
-      token: token
+      token: token,
     };
 
-    res.status(201).json(newUser)
+    res.status(201).json(newUser);
   } catch (err) {
     res.status(500).send("Error registering admin.");
   }
@@ -93,11 +90,9 @@ const login = async (req, res) => {
       staffId: admin.staffId,
       role: admin.role,
       name: admin.name,
-      token: generateToken(admin?.id)
+      token: generateToken(admin?.id),
     };
-    return res
-      .status(200)
-      .json(user);
+    return res.status(200).json(user);
   } else {
     return res
       .status(401)
@@ -163,7 +158,6 @@ const getSingleRecord = async (req, res) => {
   const { employeeId } = req.body;
   //console.log(employeeId)
   try {
-
     // Retrieve attendance records for the specified employee
     const records = await AttendanceRecord.find({ employee: employeeId }).sort({
       timestamp: "desc",
@@ -176,68 +170,20 @@ const getSingleRecord = async (req, res) => {
   }
 };
 
-const getAllLeaveRequests = async (req, res) => {
-  try {
-    const allReqs = await LeaveRequest.find()
-    if (!allReqs) {
-      res.json({ msg: "There are no leave Request"})
-    }
-
-    res.json(allReqs)
-  } catch (err) {
-    throw new Error(err)
-  }
-}
-
-//manage leave request
-const manageleaveRequest = async (req, res) => {
-  const _Id = req.params.id
-
-  const { Approval, Rejection} = req.body
-
-  //check if there leave request is valid
-  const leavereq = await LeaveRequest.findById(_Id)
-
-  if (!leavereq) {
-    return res.status(500).json({ err: 'There is no leave request associated with that particular id'})
-  }
-
-  try {
-
-    if (Approval) {
-      const approved = await leavereq.updateOne({
-        status: Approval,
-        new: true
-      })
-      return res.json(approved).status(200)
-
-    } else if (Rejection) {
-      const rejected = await leavereq.updateOne({
-        status: Rejection,
-        new: true
-      })
-      return res.json(rejected).status(200)
-    }
-
-  } catch (err) {
-    console.log(err)
-  }
-
-}
-
 const notifications = async (req, res) => {
-  const { title, body } = req.body;
+  const { title, body, to } = req.body;
   try {
     // Create a new notification
     const newNotification = new Notification({
       title,
       body,
+      to
     });
 
     await newNotification.save();
 
     // Broadcast the new notification to all connected employees
-//   const notifications = await Notification.find()
+    //   const notifications = await Notification.find()
 
     io.emit("newNotification", newNotification);
     res.status(201).json(newNotification);
@@ -247,18 +193,50 @@ const notifications = async (req, res) => {
     res.status(500).send("Error creating notification ");
   }
 };
+
+
+// Admin-only route to get attendance records of all employees
+const getAllLeaveRequest = async (req, res) => {
+          try {
+            // Retrieve leave records for all employees
+            const leaveRecords = await Leave.find().sort({ timestamp: "desc" });
+        
+            res.status(200).json(leaveRecords);
+          } catch (err) {
+            console.error("Error retrieving leave records", err);
+            res.status(500).send("Error retrieving leave records");
+          }
+        };
+
+
+const updateEmployeeLeaveRequest = async (req, res) => {
+  try {
+    const { status } = req.body;
+    const leaveId = req.params.leaveId;
+
+    // Update the leave request status
+    await Leave.findByIdAndUpdate(leaveId, { status });
+
+    res.json({ message: "Leave request updated successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+};
+
 // app.use("/api/admin", router);
 
-module.exports = { register, 
-                    login, 
-                    createEmployee, 
-                    notifications, 
-                    getAllAttendanceRecords,
-                    manageleaveRequest,
-                    getAllLeaveRequests,
-                    getSingleRecord,
-                    express,
-                    io, 
-                    http,
-                    app 
-                  };
+module.exports = {
+  register,
+  login,
+  createEmployee,
+  notifications,
+  getAllAttendanceRecords,
+  getSingleRecord,
+  updateEmployeeLeaveRequest,
+  getAllLeaveRequest,
+  express,
+  io,
+  server,
+  app,
+};

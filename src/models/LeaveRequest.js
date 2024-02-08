@@ -3,18 +3,11 @@ const mongoose = require('mongoose');
 
 const leaveRequestSchema = new mongoose.Schema({
   employee: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee' },
-  startDate: {
-    type: Date,
-    required: true
-  },
-  endDate: {
-  type: Date,
-  required: true,
-  }, 
-  reason: {
-  type: String,
-  required: true
-  },
+  startDate: Date,
+  endDate: Date,
+  reason: String,
+  leaveType: String,
+  timeStamp:Date,
   status: String, // 'Pending', 'Approved', 'Rejected', etc.
 });
 

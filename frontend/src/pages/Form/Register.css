@@ -1,0 +1,105 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Roboto";
+    min-height: 100vh;
+    padding: 20px;
+}
+
+.password-Check {
+    position: relative;
+    background-color: none;
+    left: 3rem;
+    top: 9rem;
+}
+
+.wrong-text {
+    margin-top: 0.4rem;
+    color: rgb(159, 14, 14);
+    flex: 1;
+}
+
+.pass-text {
+    margin-top: 0.4rem;
+    color: rgb(93, 246, 147);
+    flex: 1;
+}
+
+.form {
+    background-color: rgb(240, 241, 245);
+    /* text-align: center; */
+    align-items: center;
+    padding: 1rem;
+    min-height: 95vh;
+    width: 35%; /* Adjusted width to be responsive */
+    left: 30%;
+    /* top: 0rem; */
+    border: 1.5px solid #ccc;
+    border-radius: 0.5rem;
+    position: relative;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.Input {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: rgb(8, 141, 141) solid 0.18rem;
+    border-radius: 0.3rem;
+    background-color: rgb(202, 219, 242);
+    color: rgb(2, 2, 40);
+    width: 90%;
+    height: 50px;
+    left: 1.5rem;
+    top: 10rem;
+    margin-top: 2em;
+    position: relative;
+}
+.submit-btn {
+    position: relative;
+    border-style: none;
+    border-left: gray solid .1rem;
+    border-bottom: grey solid .1rem;
+    border-radius: 0.3rem;
+    background-color: rgb(2, 2, 49);
+    color: wheat;
+    top: 12rem;
+    left: 7rem;
+    width: 15vw;
+    height: 7vh;
+}
+.next-btn {
+    position: relative;
+    border-style: none;
+    border-left: gray solid .1rem;
+    border-bottom: grey solid .1rem;
+    border-radius: 0.3rem;
+    background-color: rgb(2, 2, 49);
+    color: white;
+    top: 13rem;
+    left: 6rem;
+    width: 15vw;
+    height: 7vh;
+}
+
+.Input-R1 {
+    border-top: none;
+    border-left: none;
+    border-right: none;
+    border-bottom: rgb(8, 141, 141) solid 0.18rem;
+    border-radius: 0.3rem;
+    background-color: rgb(202, 219, 242);
+    color: rgb(2, 2, 40);
+    width: 90%;
+    height: 50px;
+    left: 1.5rem;
+    top: 6rem;
+    margin-top: 2em;
+    position: relative;
+};
+
+
