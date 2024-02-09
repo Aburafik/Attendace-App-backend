@@ -1,51 +1,39 @@
 import React, { useState, useRef } from 'react'
 import './Register.css'
-import { set } from 'mongoose';
+import PasswordCheck from './passwordFeatures/PasswordCheck';
 
 export default function Register1({ name, email, staffId }) {
-  const [color, setColorstate] = useState(false)
-  const [form, setForm] = useState({
-    name: name,
-    email: email,
-    staffId: staffId,
-    password: '',
-    password1: ''
-  });
+  const [phase1, setPhase1] = useState(false) 
+  const [phase2, setPhase2] = useState(false) 
+  // const [form, setForm] = useState({
+  //   name: name,
+  //   email: email,
+  //   staffId: staffId,
+  //   password: '',
+  //   password1: ''
+  // });
 
-  class TextCheck {
-    constructor() {
-      this.plaintext = [];
-      this.isEightOrMore = this.isEightOrMore.bind(this);
-    }
-
-    isEightOrMore() {
-      const len = this.plaintext.length - 1;
-      if (this.plaintext[len].length >= 8){
-        console.log(this.plaintext[len])
-        return true
-      }
-      return false
-    }
-  }  
-  
-  const plain = useRef(new TextCheck())
+  const plain = useRef(new PasswordCheck())
 
   const handleChange = (e) => {
-    if(e.target.value === '') {
-      const foundAt = plain.current.plaintext.indexOf(e.target.value)
-      plain.current.plaintext.splice(foundAt, 1)
-    } else {
-      plain.current.plaintext.push(e.target.value)
-    }
-    const bull = plain.current.isEightOrMore();
-    console.log(bull)
-    if(bull){
-      setColorstate(true)
+    plain.current.add(e.target.value)
+    const eightOrMore = plain.current.isEightOrMore();
+    console.log(eightOrMore)
+    if(eightOrMore){
+      setPhase1(true)
       console.log('characters are 8 or more')
       plain.current.plaintext = [];
     } else {
-      setColorstate(false);
+      setPhase1(false);
     }
+
+    const UpperAndLower = plain.current.containsUpperAndLower()
+    if(UpperAndLower){
+      setPhase2(true);
+    } else {
+      setPhase2(false);
+    }
+
   }
 
   return (
@@ -54,8 +42,8 @@ export default function Register1({ name, email, staffId }) {
         <input name='password' type='password' placeholder='create a password' className='Input-R1' required onChange={handleChange} />
         <input name='password1' type='password' placeholder='confirm password' className='Input-R1' required />
         <ul className='password-Check'>
-            <li className={color ? 'pass-text': 'wrong-text'}>Password must be at least 8 characters</li>
-            <li className='wrong-text'>Password must contain an uppercase a lowercase letter</li>
+            <li className={phase1 ? 'pass-text': 'wrong-text'}>Password must be at least 8 characters</li>
+            <li className={phase2 ? 'pass-text': 'wrong-text'}>Password must contain an uppercase a lowercase letter</li>
             <li className='wrong-text'>Password must contain a number</li>
             <li className='wrong-text'>Must contain a special case character e.g(@.$.#.%...)</li>
         </ul>
