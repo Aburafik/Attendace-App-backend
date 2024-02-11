@@ -18,14 +18,19 @@ body {
 }
 
 .wrong-text {
-    margin-top: 0.4rem;
+    margin-top: 0.2rem;
     color: rgb(159, 14, 14);
+    width: 85%;
+    /* position: relative; */
+    bottom: 2rem;
+    /* padding: 2rem; */
     flex: 1;
 }
 
 .pass-text {
     margin-top: 0.4rem;
     color: rgb(93, 246, 147);
+    position: relative;
     flex: 1;
 }
 
@@ -33,10 +38,12 @@ body {
     background-color: rgb(240, 241, 245);
     /* text-align: center; */
     align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
     padding: 1rem;
     min-height: 95vh;
-    width: 35%; /* Adjusted width to be responsive */
-    left: 30%;
+    width: 40%; /* Adjusted width to be responsive */
+    left: 25%;
     /* top: 0rem; */
     border: 1.5px solid #ccc;
     border-radius: 0.5rem;
@@ -61,15 +68,16 @@ body {
 }
 .submit-btn {
     position: relative;
+    text-align: center;
     border-style: none;
     border-left: gray solid .1rem;
     border-bottom: grey solid .1rem;
     border-radius: 0.3rem;
     background-color: rgb(2, 2, 49);
-    color: wheat;
+    color: white;
     top: 12rem;
-    left: 7rem;
-    width: 15vw;
+    left: 8rem;
+    width: 17vw;
     height: 7vh;
 }
 .next-btn {
@@ -81,7 +89,7 @@ body {
     background-color: rgb(2, 2, 49);
     color: white;
     top: 13rem;
-    left: 6rem;
+    left: 8rem;
     width: 15vw;
     height: 7vh;
 }
