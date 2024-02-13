@@ -22,6 +22,10 @@ class PasswordCheck {
     add(input) {
         this.plaintext = input;
     }
+
+    isMatch(input) {
+        return this.plaintext === input
+    }
 }
 
 export default PasswordCheck;
