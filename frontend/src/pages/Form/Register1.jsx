@@ -3,7 +3,7 @@ import "./Register.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import PasswordCheck from "./passwordFeatures/PasswordCheck";
 import AuthService from "./auth/AuthService";
-
+import { Ellipsis } from "react-awesome-spinners";
 export default function Register1() {
   const location = useLocation();
   const navigate = useNavigate();
@@ -73,8 +73,16 @@ export default function Register1() {
     }
   };
 
+  if (isLoading) {
+    return (
+      <div className="spinner">
+        <Ellipsis />;
+      </div>
+    );
+  }
+
   return (
-    <form className="form">
+    <form className="Form">
       <h1>Create a password</h1>
       <input
         name="password"
@@ -102,9 +110,6 @@ export default function Register1() {
         </li>
         <li className={specialChar ? "pass-text" : "wrong-text"}>
           Must contain a special case character e.g(@.$.#.%...)
-        </li>
-        <li className={passwordMatch ? "pass-text" : "wrong-text"}>
-          Passwords must match
         </li>
       </ul>
       <button className="submit-btn" onClick={handleSubmit}>

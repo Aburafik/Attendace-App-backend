@@ -1,7 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
-import Register1 from "./Register1";
 import "./Register.css";
 
 const Register = () => {
@@ -14,7 +13,13 @@ const Register = () => {
   const navigate = useNavigate();
   const handleClick = (e) => {
     e.preventDefault();
-    navigate("/submit", { state: { form } });
+    if (form.email.length < 5 || form.name < 5 || form.staffId < 5) {
+      alert("Please enter all fields");
+      navigate(0)
+    } else {
+      navigate("/submit", { state: { form } });
+    }
+    
   };
 
   const handleChange = (e) => {
@@ -25,8 +30,9 @@ const Register = () => {
     }));
   };
   return (
-    <div className="form">
+    <div className="Form">
       <form>
+        <h1>Sign Up</h1>
         <input
           name="name"
           type="text"

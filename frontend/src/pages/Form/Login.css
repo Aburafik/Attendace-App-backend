@@ -1,0 +1,49 @@
+.login-Form {
+  text-align: center;
+  text-wrap: wrap;
+  justify-self: center;
+  justify-content: space-between;
+  flex-direction: column;
+  padding: 1rem;
+  min-height: 55vh;
+  width: 28%; /* Adjusted width to be responsive */
+  left: 35%;
+  top: 5rem;
+  border: 1.5px solid #ccc;
+  border-radius: 0.5rem;
+  position: relative;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  flex-direction: column;
+}
+
+.text-Input {
+  border-radius: 0.5rem;
+  margin-top: 2rem;
+  height: 8.5vh;
+  width: 25vw;
+}
+
+.login-btn {
+  margin-top: 3rem;
+  margin-bottom: 2rem;
+  background-color: black;
+  border-radius: .4rem;
+  border: none;
+  color: white;
+  width: 15vw;
+  height: 7vh;
+}
+.txt {
+  /* position: absolute; */
+  flex-direction: row;
+  margin-left: 2rem;
+  /* margin-bottom: 3rem; */
+}
+
+.s-p {
+  color: blue;
+  text-decoration-line: underline;
+  margin-left: 14rem;
+  /* position: absolute; */
+  /* bottom: 0.1rem; */
+}
