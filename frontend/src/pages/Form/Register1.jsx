@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Register.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import PasswordCheck from "./passwordFeatures/PasswordCheck";
-import AuthService from "./auth/AuthService";
+import { registerAuthService } from "./auth/AuthService";
 import { Ellipsis } from "react-awesome-spinners";
 export default function Register1() {
   const location = useLocation();
@@ -57,7 +57,7 @@ export default function Register1() {
 
     if (isValidLength && hasAnumber && hasUpperAndLower && specialChar) {
       try {
-        const token = await AuthService(form);
+        const token = await registerAuthService(form);
 
         if (token) {
           localStorage.setItem("token", token);
