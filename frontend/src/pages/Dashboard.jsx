@@ -1,17 +1,17 @@
-import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import React, { useContext, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import UserContext from "../features/auth/UserContext";
 
 const Dashboard = () => {
-    const navigate = useNavigate()
-    const token = localStorage.getItem('token')
-    if(!token) {
-        navigate('/login')
-    } else {
-        return (
-            <div>Dashboard</div>
-        )
-    }
- 
-}
+  const { user } = useContext(UserContext);
+  const navigate = useNavigate();
 
-export default Dashboard
+  useEffect(() => {
+    if (!user) {
+      navigate("/login");
+    }
+  }, [user]);
+  return <div>Dashboard</div>;
+};
+
+export default Dashboard;

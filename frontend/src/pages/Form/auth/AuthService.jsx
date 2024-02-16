@@ -1,15 +1,28 @@
-import axios from 'axios'
+import axios from "axios";
 
-const AuthService = async(form) => {
-    const response = await axios.post('/api/admin/register', form)
-    const data = await response.data.json()
+const AuthService = async (form) => {
+  const submitform = {
+    email: form.email,
+    staffId: form.staffId,
+    name: form.name,
+    password: form.password,
+  };
 
-    if (response.status === 200 &&  data.token){
-        localStorage.setItem('token', data.token)
-        return true
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/admin/register",
+      submitform
+    );
+
+    if (response.status === 201 && response.data.token) {
+      return response.data.token;
     } else {
-        throw new Error("Attempt fail, Please try again")
+      throw new Error("Attempt failed. Please try again.");
     }
-}
+  } catch (error) {
+    console.error("Error occurred during authentication:", error);
+    throw new Error("Error occurred during authentication.");
+  }
+};
 
-export default AuthService
+export default AuthService;

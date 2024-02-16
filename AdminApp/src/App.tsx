@@ -1,15 +1,18 @@
 import React from 'react';
 import './App.css';
-import Forms from './Pages/Forms';
+// import Forms from './Pages/Forms';
+import Register from './Components/Forms/Register';
+import Register1 from './Components/Forms/Register1';
+import { Link } from 'react-router-dom';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 
-function App() {
+const App: React.FC = () => {
   return (
-    <Router>
-      <Routes>
-        <Route path='/*' element={<Forms />}/>
-      </Routes>
-    </Router>
+    <div>
+      <p>link</p>
+      <Link to="/">kd</Link>
+    </div>
+    // <h1>Hello world</h1>
   );
 }
 
