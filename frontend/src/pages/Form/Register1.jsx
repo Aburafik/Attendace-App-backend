@@ -82,7 +82,7 @@ export default function Register1() {
   }
 
   return (
-    <form className="Form">
+    <form className="sbt-form">
       <h1>Create a password</h1>
       <input
         name="password"

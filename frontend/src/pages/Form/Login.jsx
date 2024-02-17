@@ -61,7 +61,7 @@ const Login = () => {
       <div className="txt">
         <p>Don't have an Account?</p>
         <p onClick={handleClick} className="s-p">
-          SignUp
+          Sign-Up
         </p>
       </div>
     </div>

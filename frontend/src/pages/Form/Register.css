@@ -1,14 +1,13 @@
-* {
+/* * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
-}
+} */
 
-body {
+/* body {
   font-family: "Roboto";
   min-height: 100vh;
-  padding: 20px;
-}
+} */
 
 .spinner {
   justify-self: center;
@@ -16,22 +15,26 @@ body {
 }
 
 .password-Check {
-    position: relative;
-    background-color: none;
-    left: 3rem;
-    top: 10rem;
+  position: relative;
+  background-color: none;
+  text-align: left;
+  flex-direction: column;
+  /* justify-content: start; */
+  justify-content: space-between;
+  /* left: 3rem; */
+  /* top: 10rem; */
 }
 
 .wrong-text {
-  margin-top: 0.2rem;
+  margin-top: 0.5rem;
   color: rgb(159, 14, 14);
   width: 85%;
-  position: relative;
-  bottom: 2rem;
+  /* position: relative; */
+  /* bottom: 2rem; */
 }
 
 .pass-text {
-  margin-top: 0.4rem;
+  margin-top: 0.5rem;
   color: rgb(93, 246, 147);
   position: relative;
   /* flex: 1; */
@@ -43,13 +46,29 @@ body {
   justify-self: center;
   flex-direction: column;
   padding: 1rem;
-  min-height: 95vh;
-  width: 35%;
-  left: 25%;
+  min-height: 85vh;
+  max-width: 75vh;
+  left: 35%;
   /* top: 0rem; */
   border: 1.5px solid #ccc;
   border-radius: 0.5rem;
-  position: relative;
+  position: sticky;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sbt-form {
+  text-align: center;
+  /* align-items: center; */
+  justify-self: center;
+  flex-direction: column;
+  padding: 1rem;
+  min-height: 85vh;
+  max-width: 75vh;
+  left: 35%;
+  margin-top: 2rem;
+  border: 1.5px solid #ccc;
+  border-radius: 0.5rem;
+  position: sticky;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
@@ -64,7 +83,7 @@ body {
   width: 90%;
   height: 50px;
   /* left: 1.5rem; */
-  top: 8rem;
+  top: 2rem;
   margin-top: 2em;
   position: relative;
 }
@@ -77,9 +96,9 @@ body {
   border-radius: 0.3rem;
   background-color: black;
   color: white;
-  top: 12rem;
+  /* top: 12rem; */
   /* left: 8rem; */
-  width: 18vw;
+  width: 30vh;
   height: 7vh;
 }
 .next-btn {
@@ -90,9 +109,9 @@ body {
   border-radius: 0.3rem;
   background-color: black;
   color: white;
-  top: 13rem;
+  top: 5rem;
   /* left: 8rem; */
-  width: 18vw;
+  width: 30vh;
   height: 7vh;
 }
 
@@ -105,9 +124,8 @@ body {
   background-color: rgb(238, 235, 235);
   color: rgb(2, 2, 40);
   width: 90%;
-  height: 50px;
+  height: 60px;
   /* left: 1.5rem; */
-  top: 6rem;
+  top: 2rem;
   margin-top: 2em;
-  position: relative;
 }

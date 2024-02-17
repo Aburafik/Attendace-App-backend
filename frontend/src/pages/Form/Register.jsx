@@ -11,15 +11,15 @@ const Register = () => {
   });
 
   const navigate = useNavigate();
+
   const handleClick = (e) => {
     e.preventDefault();
     if (form.email.length < 5 || form.name < 5 || form.staffId < 5) {
-      alert("Please enter all fields");
-      navigate(0)
+      window.alert("Please enter all fields");
+      navigate(0);
     } else {
       navigate("/submit", { state: { form } });
     }
-    
   };
 
   const handleChange = (e) => {
