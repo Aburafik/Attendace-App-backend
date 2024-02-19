@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { loginAuthService } from "./auth/AuthService";
 
 const Login = () => {
+  const [ forgotpsd, setForgotpsd] = useState('')
   const [form, setform] = useState({
     email: "",
     password: "",
@@ -16,10 +17,12 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-
     try {
       const token = loginAuthService(form);
-
+      if (token === "unauthorized") {
+        setForgotpsd("Forgot password")
+        return null;
+      }
       if (token) {
         localStorage.setItem("token", token);
         navigate("/");
@@ -63,6 +66,7 @@ const Login = () => {
         <p onClick={handleClick} className="s-p">
           Sign-Up
         </p>
+        <div className="forgot-pasd">{forgotpsd}</div>
       </div>
     </div>
   );

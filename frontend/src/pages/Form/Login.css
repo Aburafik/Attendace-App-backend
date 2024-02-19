@@ -1,14 +1,14 @@
 .login-Form {
   text-wrap: wrap;
-  justify-content: space-between;
   text-align: center;
   flex-direction: column;
   /* flex: 1rem; */
-  margin-top: 2rem;
-  left: 30rem;
-  padding: 1rem;
-  min-height: 33vw;
-  max-width: 75vh; /* Adjusted width to be responsive */
+  margin-top: 10vh;
+  align-self: center;
+  left:65vh;
+  /* padding: 1rem; */
+  max-height: 110vh;
+  max-width: 500px; /* Adjusted width to be responsive */
   border: 1.5px solid #ccc;
   border-radius: 0.5rem;
   position: sticky;
@@ -29,8 +29,8 @@
   border-radius: 0.4rem;
   border: none;
   color: white;
-  min-width: 35vh;
-  min-height: 7vh;
+  min-width: 250px;
+  min-height: 50px;
 }
 .txt {
   /* position: absolute; */
@@ -44,9 +44,18 @@
 }
 
 .s-p {
+  position: sticky;
+  left: 20rem;
   color: blue;
   text-decoration-line: underline;
   /* margin-left: 14rem; */
   /* position: absolute; */
   /* bottom: 0.1rem; */
+}
+
+.forgot-pasd {
+  position: relative;
+  right: 150px;
+  color: red;
+  /* left: 1; */
 }

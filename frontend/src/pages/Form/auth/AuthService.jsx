@@ -25,18 +25,22 @@ export const registerAuthService = async (form) => {
   }
 };
 
-export const loginAuthService = async(form) => {
-
+export const loginAuthService = async (form) => {
   try {
-    const response = await axios.post("http://localhost:5000/api/admin/login", form);
+    const response = await axios.post(
+      "http://localhost:5000/api/admin/login",
+      form
+    );
 
     if (response.status === 200 && response.data.token) {
       return response.data.token;
+    } else if (response.status === 401) {
+      return "unauthorized";
     } else {
       throw new Error("Login failed please try again");
     }
-  }  catch (error) {
+  } catch (error) {
     console.error("Error occurred during authentication:", error);
     throw new Error("Error occurred during authentication.");
   }
-}
+};
