@@ -15,7 +15,7 @@ export const registerAuthService = async (form) => {
     );
 
     if (response.status === 201 && response.data.token) {
-      return response.data.token;
+      return response.data;
     } else {
       throw new Error("Attempt failed. Please try again.");
     }
@@ -33,9 +33,9 @@ export const loginAuthService = async (form) => {
     );
 
     if (response.status === 200 && response.data.token) {
-      return response.data.token;
+      return response.data;
     } else if (response.status === 401) {
-      return "unauthorized";
+      console.log("Attempt failed");
     } else {
       throw new Error("Login failed please try again");
     }

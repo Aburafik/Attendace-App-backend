@@ -1,11 +1,12 @@
 import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Provider } from "react-redux";
 import Login from "./pages/Form/Login";
 import Register from "./pages/Form/Register";
 import Register1 from "./pages/Form/Register1";
 import Dashboard from "./pages/Dashboard";
-import UserContext from "./features/auth/UserContext";
 import { useState, useEffect } from "react";
+import Store from "./store/Store";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -27,7 +28,7 @@ function App() {
 
   return (
     <React.StrictMode>
-      <UserContext.Provider value={{ user, setUser }}>
+      <Provider store={Store}>
         <Router>
           <Routes>
             <Route path="/login" element={<Login />} />
@@ -36,7 +37,7 @@ function App() {
             <Route path="/" element={<Dashboard />} />
           </Routes>
         </Router>
-      </UserContext.Provider>
+      </Provider>
     </React.StrictMode>
   );
 }

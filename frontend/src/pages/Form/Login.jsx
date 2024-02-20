@@ -1,10 +1,15 @@
 import "./Login.css";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { loginAuthService } from "./auth/AuthService";
+import { loginUserAsync } from "../../features/auth/authService";
+import { useSelector, useDispatch } from "react-redux";
+import Spinner from "react-bootstrap/Spinner";
 
 const Login = () => {
-  const [ forgotpsd, setForgotpsd] = useState('')
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const dispatch = useDispatch();
+  const [loading, setIsLoading] = useState(false);
+  const [forgotpsd, setForgotpsd] = useState("");
   const [form, setform] = useState({
     email: "",
     password: "",
@@ -15,24 +20,21 @@ const Login = () => {
     navigate("/register");
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    try {
-      const token = loginAuthService(form);
-      if (token === "unauthorized") {
-        setForgotpsd("Forgot password")
-        return null;
-      }
-      if (token) {
-        localStorage.setItem("token", token);
-        navigate("/");
-      } else {
-        throw new Error("Token not recieved");
-      }
-    } catch (err) {
-      throw new Error(err);
-    }
+    setIsLoading(true);
+    dispatch(loginUserAsync(form));
   };
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      const timeout = setTimeout(() => {
+        navigate("/");
+      });
+
+      return () => clearTimeout(timeout);
+    }
+  }, [isAuthenticated, navigate]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -41,6 +43,9 @@ const Login = () => {
       [name]: value,
     }));
   };
+  if (loading) {
+    return <p>loading</p>;
+  }
   return (
     <div className="login-Form">
       <h1>Login</h1>

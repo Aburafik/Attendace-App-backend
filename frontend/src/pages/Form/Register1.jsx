@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./Register.css";
 import { useLocation, useNavigate } from "react-router-dom";
 import PasswordCheck from "./passwordFeatures/PasswordCheck";
-import { registerAuthService } from "./auth/AuthService";
+import { registerUserAsync } from "../../features/auth/authService";
 import { Ellipsis } from "react-awesome-spinners";
 export default function Register1() {
   const location = useLocation();
@@ -57,10 +57,10 @@ export default function Register1() {
 
     if (isValidLength && hasAnumber && hasUpperAndLower && specialChar) {
       try {
-        const token = await registerAuthService(form);
+        const User = registerUserAsync(form);
 
-        if (token) {
-          localStorage.setItem("token", token);
+        if (User.token) {
+          localStorage.setItem("token", User.token);
           navigate("/");
         } else {
           throw new Error("Token not received. Please try again.");
