@@ -5,6 +5,7 @@ import { Button, Icon } from "semantic-ui-react";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
+import Nav from "../components/Nav";
 
 const Dashboard = () => {
   const buttonRef = useRef();
@@ -19,27 +20,7 @@ const Dashboard = () => {
   return (
     <div className="dash">
       {/**navigation bar */}
-      <nav className="navbar">
-        <p style={{ backgroundColor: "black" }}>Nav</p>
-        <div>
-          <Button ref={buttonRef} />
-        </div>
-        <div>
-          
-        </div>
-        <div>
-          <p>Nav</p>
-        </div>
-        <div>
-          <p>Nav</p>
-        </div>
-        <div>
-          <p>Nav</p>
-        </div>
-        <div>
-          <p>Nav</p>
-        </div>
-      </nav>
+      <Nav />
     </div>
   );
 };
