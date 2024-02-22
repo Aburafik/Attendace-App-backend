@@ -1,12 +1,9 @@
 import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
-import Login from "./pages/Form/Login";
-import Register from "./pages/Form/Register";
-import Register1 from "./pages/Form/Register1";
-import Dashboard from "./pages/Dashboard";
 import { useState, useEffect } from "react";
 import Store from "./store/Store";
+import AppRouters from "./routes/index";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -30,12 +27,7 @@ function App() {
     <React.StrictMode>
       <Provider store={Store}>
         <Router>
-          <Routes>
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/submit" element={<Register1 />} />
-            <Route path="/" element={<Dashboard />} />
-          </Routes>
+          <AppRouters />
         </Router>
       </Provider>
     </React.StrictMode>
