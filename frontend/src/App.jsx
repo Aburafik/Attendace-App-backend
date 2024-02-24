@@ -3,7 +3,7 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { Provider } from "react-redux";
 import { useState, useEffect } from "react";
 import Store from "./store/Store";
-import AppRouters from "./routes/index";
+import { AppRouters } from "./routes/index";
 
 function App() {
   const [user, setUser] = useState(null);

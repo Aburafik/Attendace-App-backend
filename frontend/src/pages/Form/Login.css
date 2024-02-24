@@ -5,7 +5,7 @@
   /* flex: 1rem; */
   margin-top: 10vh;
   align-self: center;
-  left:65vh;
+  left: 65vh;
   /* padding: 1rem; */
   max-height: 110vh;
   max-width: 500px; /* Adjusted width to be responsive */
@@ -15,11 +15,15 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+input:focus {
+  outline: none;
+}
+
 .text-Input {
   border-radius: 0.5rem;
-  margin-top: 2rem;
-  height: 8vh;
-  min-width: 80%;
+  margin-top: 0.2rem;
+  height: 5vh;
+  min-width: 280px;
 }
 
 .login-btn {
