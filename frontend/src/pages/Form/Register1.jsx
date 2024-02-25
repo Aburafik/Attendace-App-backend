@@ -83,21 +83,30 @@ export default function Register1() {
 
   return (
     <form className="sbt-form">
-      <h1>Create a password</h1>
-      <input
-        name="password"
-        type="password"
-        placeholder="create a password"
-        className="Input-R1"
-        required
-        onChange={handleChange}
-      />
-      <input
-        name="password1"
-        type="password"
-        placeholder="confirm password"
-        className="Input-R1"
-      />
+      <div className="space-y-10">
+        <div className="flex flex-col items-start space-y-2">
+          <p className="font-bold text-xl">New Password</p>
+          <input
+            name="password"
+            type="password"
+            placeholder="create a password"
+            className="Input-R1"
+            required
+            onChange={handleChange}
+          />
+        </div>
+
+        <div className="flex flex-col items-start space-y-2">
+          <p className="font-bold text-xl">Confirm Password</p>
+          <input
+            name="password1"
+            type="password"
+            placeholder="confirm password"
+            className="Input-R1"
+          />
+        </div>
+      </div>
+
       <ul className="password-Check">
         <li className={isValidLength ? "pass-text" : "wrong-text"}>
           Password must be at least 8 characters

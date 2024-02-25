@@ -1,12 +1,14 @@
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
-import ProtectedRoutes from "./protectedRoute";
+import { ProtectedRoutes } from "./protectedRoute";
 import AuthenticationRoute from "./authRoute";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
+const isAuthenticated = true;
+
 export const AppRouters = () => {
-  return <AuthenticationRoute />
+  return isAuthenticated ? <ProtectedRoutes /> : <AuthenticationRoute />;
 };
 
 // const User = useSelector((state) => state.auth.user);

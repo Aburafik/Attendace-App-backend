@@ -1,5 +1,6 @@
 import React, { useRef } from "react";
 // import { Button, Icon } from "semantic-ui-react";
+import { useNavigate } from "react-router-dom";
 import {
   PeopleIcon,
   GraphIcon,
@@ -9,13 +10,16 @@ import {
 } from "@primer/octicons-react";
 import "../styles/Navbar.css";
 
-const Nav = () => {
+const Nav = ({ routeName }) => {
   const buttonRef = useRef();
+  const navigate = useNavigate();
+
   return (
     <div>
       <nav className="navbar nav-div">
         <div style={{ marginTop: "10rem" }}>
           <div
+            onClick={() => navigate("/task")}
             ref={buttonRef}
             style={{
               width: "100%",
@@ -28,6 +32,7 @@ const Nav = () => {
             <span className="text-xl ml-4 mr-28">Task</span>
           </div>
           <div
+            onClick={() => navigate(`${routeName}`)}
             ref={buttonRef}
             style={{
               width: "100%",
@@ -41,6 +46,7 @@ const Nav = () => {
             <span className="text-xl mr-20 ml-4">Reports</span>
           </div>
           <div
+            onClick={() => navigate(`${routeName}`)}
             ref={buttonRef}
             style={{
               width: "100%",
@@ -54,6 +60,7 @@ const Nav = () => {
             <span className="text-xl mr-16 ml-4">Employees</span>
           </div>
           <div
+            onClick={() => navigate(`${routeName}`)}
             ref={buttonRef}
             style={{
               width: "100%",
@@ -66,6 +73,7 @@ const Nav = () => {
             <span className="text-xl mr-16 ml-4">Attendance</span>
           </div>
           <div
+            onClick={() => navigate(`${routeName}`)}
             ref={buttonRef}
             style={{
               width: "100%",

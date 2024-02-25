@@ -33,31 +33,44 @@ const Register = () => {
     <div className="Form">
       <form>
         <h1>Sign Up</h1>
-        <input
-          name="name"
-          type="text"
-          placeholder="Enter your name"
-          className="Input"
-          onChange={handleChange}
-        />
-        <input
-          name="email"
-          type="email"
-          placeholder="Enter your email"
-          className="Input"
-          onChange={handleChange}
-        />
-        <input
-          name="staffId"
-          type="text"
-          placeholder="Enter your staff Id"
-          className="Input"
-          onChange={handleChange}
-        />
+        <div className="mt-10 space-y-7">
+          <div className="flex flex-col">
+            <p className="font-bold text-xl">Full Name</p>
+            <input
+              name="name"
+              type="text"
+              placeholder="Enter your name"
+              className="Input"
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <p className="font-bold text-xl">Full Name</p>
+            <input
+              name="email"
+              type="email"
+              placeholder="Enter your email"
+              className="Input"
+              onChange={handleChange}
+            />
+          </div>
+          <div>
+            <p className="font-bold text-xl">Staff ID</p>
+            <input
+              name="staffId"
+              type="text"
+              placeholder="Enter your staff Id"
+              className="Input"
+              onChange={handleChange}
+            />
+          </div>
+        </div>
         {/* <input name='sex' type='checkbox' placeholder='Date of Birth' /> */}
-        <button className="next-btn" onClick={handleClick}>
-          Next
-        </button>
+        <div className="flex justify-center items-center">
+          <button className="next-btn" onClick={handleClick}>
+            Next
+          </button>
+        </div>
       </form>
     </div>
   );

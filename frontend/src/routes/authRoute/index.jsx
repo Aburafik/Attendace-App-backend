@@ -8,9 +8,9 @@ import { useEffect } from "react";
 const AuthenticationRoute = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    navigate("login");
-  }, []);
+  // useEffect(() => {
+  //   navigate("login");
+  // }, []);
   return (
     <div>
       <Routes>

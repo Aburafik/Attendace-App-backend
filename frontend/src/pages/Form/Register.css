@@ -41,10 +41,10 @@
 }
 
 .Form {
-  text-align: center;
+  /* text-align: center; */
   /* align-items: center; */
-  justify-self: center;
-  flex-direction: column;
+  /* justify-self: center; */
+  /* flex-direction: column; */
   padding: 1rem;
   min-height: 85vh;
   max-width: 75vh;
@@ -84,12 +84,12 @@
   height: 50px;
   /* left: 1.5rem; */
   top: 2rem;
-  margin-top: 2em;
-  position: relative;
+  margin-top: .2em;
+  /* position: relative; */
 }
 .submit-btn {
-  position: relative;
-  text-align: center;
+  /* position: relative; */
+  /* text-align: center; */
   border-style: none;
   border-left: gray solid 0.1rem;
   border-bottom: grey solid 0.1rem;
@@ -109,9 +109,9 @@
   border-radius: 0.3rem;
   background-color: black;
   color: white;
-  top: 5rem;
+  top: 2rem;
   /* left: 8rem; */
-  width: 30vh;
+  width: 40vh;
   height: 7vh;
 }
 
@@ -126,6 +126,6 @@
   width: 90%;
   height: 60px;
   /* left: 1.5rem; */
-  top: 2rem;
-  margin-top: 2em;
+  /* top: 2rem;
+  margin-top: 2em; */
 }
