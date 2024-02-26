@@ -2,9 +2,7 @@ import React from "react";
 import Nav from "../components/Nav";
 
 const Reports = () => {
-  return (
-    <Nav routeName={'/report'}/>
-  );
+  return <Nav />;
 };
 
 export default Reports;

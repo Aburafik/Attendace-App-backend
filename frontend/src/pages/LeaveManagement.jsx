@@ -2,9 +2,7 @@ import React from "react";
 import Nav from "../components/Nav";
 
 const LeaveManagement = () => {
-  return (
-    <Nav routeName={'/leave'}/>
-  )
+  return <Nav />;
 };
 
 export default LeaveManagement;

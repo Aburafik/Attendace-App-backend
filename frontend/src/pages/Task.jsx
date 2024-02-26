@@ -3,7 +3,12 @@ import Nav from "../components/Nav";
 
 const Task = () => {
   return (
-    <Nav routeName={"/attendance"} />
+    <div className="flex flex-row relative space-x-20">
+      <Nav />
+      <div className="bg-black w-80">
+        <p>Task</p>
+      </div>
+    </div>
   );
 };
 

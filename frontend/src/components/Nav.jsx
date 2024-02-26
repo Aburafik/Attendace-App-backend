@@ -10,13 +10,13 @@ import {
 } from "@primer/octicons-react";
 import "../styles/Navbar.css";
 
-const Nav = ({ routeName }) => {
+const Nav = () => {
   const buttonRef = useRef();
   const navigate = useNavigate();
 
   return (
     <div>
-      <nav className="navbar nav-div">
+      <nav className="navbar">
         <div style={{ marginTop: "10rem" }}>
           <div
             onClick={() => navigate("/task")}
@@ -32,7 +32,7 @@ const Nav = ({ routeName }) => {
             <span className="text-xl ml-4 mr-28">Task</span>
           </div>
           <div
-            onClick={() => navigate(`${routeName}`)}
+            onClick={() => navigate("/report")}
             ref={buttonRef}
             style={{
               width: "100%",
@@ -46,7 +46,7 @@ const Nav = ({ routeName }) => {
             <span className="text-xl mr-20 ml-4">Reports</span>
           </div>
           <div
-            onClick={() => navigate(`${routeName}`)}
+            onClick={() => navigate("/employees")}
             ref={buttonRef}
             style={{
               width: "100%",
@@ -60,7 +60,7 @@ const Nav = ({ routeName }) => {
             <span className="text-xl mr-16 ml-4">Employees</span>
           </div>
           <div
-            onClick={() => navigate(`${routeName}`)}
+            onClick={() => navigate("/attendance")}
             ref={buttonRef}
             style={{
               width: "100%",
@@ -73,7 +73,7 @@ const Nav = ({ routeName }) => {
             <span className="text-xl mr-16 ml-4">Attendance</span>
           </div>
           <div
-            onClick={() => navigate(`${routeName}`)}
+            onClick={() => navigate("/leave")}
             ref={buttonRef}
             style={{
               width: "100%",
