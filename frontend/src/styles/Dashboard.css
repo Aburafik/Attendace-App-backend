@@ -1,8 +1,5 @@
 .dash {
-  background-color: rgb(249, 249, 249);
   position: relative;
   display: flex;
   height: 100vh;
 }
-
-

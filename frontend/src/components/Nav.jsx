@@ -15,78 +15,55 @@ const Nav = () => {
   const navigate = useNavigate();
 
   return (
-    <div>
-      <nav className="navbar">
-        <div style={{ marginTop: "10rem" }}>
-          <div
-            onClick={() => navigate("/task")}
-            ref={buttonRef}
-            style={{
-              width: "100%",
-              height: "10vh",
-            }}
-            className="bg-zinc-200 justify-start items-start p-2 flex-row"
-          >
-            {" "}
-            <NoteIcon size={24} className="mr-7 mt-2" />
-            <span className="text-xl ml-4 mr-28">Task</span>
-          </div>
-          <div
-            onClick={() => navigate("/report")}
-            ref={buttonRef}
-            style={{
-              width: "100%",
-              height: "10vh",
-              marginTop: ".2rem",
-            }}
-            className="bg-zinc-200 justify-center items-center p-2 flex-row"
-          >
-            {" "}
-            <ChecklistIcon size={24} className="mr-7 mt-2" />
-            <span className="text-xl mr-20 ml-4">Reports</span>
-          </div>
-          <div
-            onClick={() => navigate("/employees")}
-            ref={buttonRef}
-            style={{
-              width: "100%",
-              height: "10vh",
-              marginTop: ".2rem",
-            }}
-            className="bg-zinc-200 justify-center items-center p-2 flex-row"
-          >
-            {" "}
-            <PeopleIcon size={24} className="mr-7 mt-2" />
-            <span className="text-xl mr-16 ml-4">Employees</span>
-          </div>
-          <div
-            onClick={() => navigate("/attendance")}
-            ref={buttonRef}
-            style={{
-              width: "100%",
-              height: "10vh",
-              marginTop: ".2rem",
-            }}
-            className="bg-zinc-200 justify-center items-center p-2 flex-row"
-          >
-            <LogIcon size={24} className="mr-5 mt-2" />
-            <span className="text-xl mr-16 ml-4">Attendance</span>
-          </div>
-          <div
-            onClick={() => navigate("/leave")}
-            ref={buttonRef}
-            style={{
-              width: "100%",
-              height: "10vh",
-              marginTop: ".2rem",
-            }}
-            className="bg-zinc-200 justify-center items-center p-2 flex-row"
-          >
-            <GraphIcon size={24} className="mr-5 mt-2" />
-            <span className="text-xl">Leave management</span>
-          </div>
+    <div
+      style={{ height: "599px" }}
+      className="flex justify-end flex-col sticky bg-slate-100"
+    >
+      <div style={{ marginTop: "10rem", possition: "sticky" }}>
+        <div
+          onClick={() => navigate("/task")}
+          ref={buttonRef}
+          className="bg-blue-200 justify-start items-start space-x-12 p-3 flex-row"
+        >
+          {" "}
+          <NoteIcon size={24} />
+          <span className="text-xl">Task</span>
         </div>
-      </nav>
+        <div
+          onClick={() => navigate("/report")}
+          ref={buttonRef}
+          className="bg-blue-200 justify-start items-start mt-1 space-x-12 p-3 flex-row"
+        >
+          {" "}
+          <ChecklistIcon size={24} />
+          <span className="text-xl">Reports</span>
+        </div>
+        <div
+          onClick={() => navigate("/employees")}
+          ref={buttonRef}
+          className="bg-blue-200 justify-start items-start mt-1 space-x-12 p-3 flex-row"
+        >
+          {" "}
+          <PeopleIcon size={24} />
+          <span className="text-xl">Employees</span>
+        </div>
+        <div
+          onClick={() => navigate("/attendance")}
+          ref={buttonRef}
+          className="bg-blue-200 justify-start items-start mt-1 space-x-12 p-3 flex-row"
+        >
+          <LogIcon size={24} />
+          <span className="text-xl">Attendance</span>
+        </div>
+        <div
+          onClick={() => navigate("/leave")}
+          ref={buttonRef}
+          className="bg-blue-200 justify-start items-start mt-1 space-x-12 p-3 flex-row"
+        >
+          <GraphIcon size={24} />
+          <span className="text-xl">Leave management</span>
+        </div>
+      </div>
     </div>
   );
 };

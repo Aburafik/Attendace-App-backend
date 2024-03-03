@@ -1,82 +1,126 @@
 import React from "react";
 import Nav from "../components/Nav";
+import Header from "../components/attendance/Header";
+import { DevicesIcon } from "@primer/octicons-react";
+import Usercard from "../components/cards/Usercard";
+import Active from "../widget/status/Active";
 import {
-  WorkflowIcon,
-  ArrowSwitchIcon,
-  HomeIcon,
+  PersonIcon,
+  IssueOpenedIcon,
+  ClockFillIcon,
+  ClockIcon,
+  PeopleIcon,
 } from "@primer/octicons-react";
 
 const Attendance = () => {
   return (
-    <div className="flex flex-row">
+    <div style={{ height: "100vh" }} className="flex relative flex-row">
       <Nav />
-      <div
-        className="bg-white ml-12 flex flex-col p-5"
-        style={{ width: "75vw", textWrap: "wrap" }}
-      >
-        <h1>Attendance</h1>
-        <div className="mt-5 flex flex-row space-x-10 justify-center">
-          <div className="flex flex-row items-center space-x-3 bg-orange-200 p-2 rounded-xl">
-            <img
-              src="https://i.ibb.co/z4z4z4z/attendance.png"
-              alt="attendance"
-              style={{ width: "12vh", borderRadius: "7vh" }}
-            />
+      <div className="mt-5">
+        <h1>Today</h1>
+        <div className="flex flex-row justify-center ml-6 bg-slate-100 space-x-60 rounded-xl p-2">
+          <div className="flex flex-col justify-center border-purple-600 bg-purple-400 rounded-xl items-center border p-2">
+            <PeopleIcon size={40} />
+            <p className="font-bold text-zinc-400">Employee</p>
+          </div>
+          <div className="flex flex-col bg-green-300 justify-center rounded-xl border-green-600 items-center border p-2">
+            <ClockFillIcon size={40} />
+            <p className="font-bold text-zinc-400">Checkin</p>
+          </div>
+          <div className="flex flex-col justify-center bg-violet-400 rounded-xl items-center border border-violet-600 p-2">
+            <ClockIcon size={40} />
+            <p className="font-bold text-zinc-400">Checkout</p>
+          </div>
+          <div className="flex flex-col justify-center items-center border p-2 rounded-xl border-orange-600 bg-orange-200">
+            <IssueOpenedIcon size={40} color="bue" />
+            <p className="font-bold text-zinc-400">Status</p>
+          </div>
+        </div>
+        <div className="flex flex-row justify-between items-center ml-6 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+          <div className="flex flex-row items-center justify-center space-x-2">
             <div>
-              <p className="font-bold text-lg">Maria Smith</p>
-              <p>Software developer</p>
+              <PersonIcon size={32} />
             </div>
+            <p className="text-lg">Meech</p>
           </div>
-
-          <div className="flex flex-row items-center space-x-5 bg-emerald-200 rounded-xl p-2">
-            <div
-              style={{
-                backgroundColor: "#5FBDFF",
-                padding: "3vh",
-                borderRadius: "7vh",
-              }}
-            >
-              <WorkflowIcon size={24} />
+          <p>02-04-24</p>
+          <p>02-04-24</p>
+          <Active isActive="Absent" color="red" />
+        </div>
+        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+          <div className="flex flex-row items-center justify-center space-x-2">
+            <div>
+              <PersonIcon size={32} />
             </div>
-            <div className="space-y-2">
-              <p className="font-bold text-lg">Employee ID</p>
-              <p>EHSDJE94383</p>
-            </div>
+            <p className="text-lg">Ben</p>
           </div>
-          <div className="flex flex-row items-center space-x-5 bg-blue-400 rounded-xl p-2">
-            <div
-              style={{
-                backgroundColor: "#1D24CA",
-                padding: "3vh",
-                borderRadius: "7vh",
-              }}
-            >
-              <ArrowSwitchIcon size={24} />
+          <p>02-04-24</p>
+          <p>02-04-24</p>
+          <Active isActive="Present" color="green" />
+        </div>
+        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+          <div className="flex flex-row items-center justify-center space-x-2">
+            <div>
+              <PersonIcon size={32} />
             </div>
-            <div className="space-y-2">
-              <p className="font-bold text-lg">Joining Date</p>
-              <p>21 April, 2001</p>
-            </div>
+            <p className="text-lg">Pop can</p>
           </div>
-          <div className="flex flex-row items-center space-x-5 bg-violet-400 rounded-xl p-2">
-            <div
-              style={{
-                backgroundColor: "#D04848",
-                padding: "3vh",
-                borderRadius: "7vh",
-              }}
-            >
-              <HomeIcon size={24} />
+          <p>02-04-24</p>
+          <p>02-04-24</p>
+          <Active isActive="Present" color="green" />
+        </div>
+        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+          <div className="flex flex-row items-center justify-center space-x-2">
+            <div>
+              <PersonIcon size={32} />
             </div>
-            <div className="space-y-2">
-              <p className="font-bold text-lg">Department</p>
-              <p>Account</p>
-            </div>
+            <p className="text-lg">X-ray</p>
           </div>
+          <p>02-04-24</p>
+          <p>02-04-24</p>
+          <Active isActive="Absent" color="red" />
+        </div>
+        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+          <div className="flex flex-row items-center justify-center space-x-2">
+            <div>
+              <PersonIcon size={32} />
+            </div>
+            <p className="text-lg">X-ray</p>
+          </div>
+          <p>02-04-24</p>
+          <p>02-04-24</p>
+          <Active isActive="Absent" color="red" />
+        </div>
+        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+          <div className="flex flex-row items-center justify-center space-x-2">
+            <div>
+              <PersonIcon size={32} />
+            </div>
+            <p className="text-lg">X-ray</p>
+          </div>
+          <p>02-04-24</p>
+          <p>02-04-24</p>
+          <Active isActive="Present" color="green" />
+        </div>
+        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+          <div className="flex flex-row items-center justify-center space-x-2">
+            <div>
+              <PersonIcon size={32} />
+            </div>
+            <p className="text-lg">X-ray</p>
+          </div>
+          <p>02-04-24</p>
+          <p>02-04-24</p>
+          <Active isActive="Present" color="green" />
         </div>
       </div>
     </div>
   );
 };
+
+{
+  /* <Nav />
+      <Header /> */
+}
 
 export default Attendance;
