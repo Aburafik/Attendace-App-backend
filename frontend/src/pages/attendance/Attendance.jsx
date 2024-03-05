@@ -1,9 +1,10 @@
 import React from "react";
-import Nav from "../components/Nav";
-import Header from "../components/attendance/Header";
+import Nav from "../../components/Nav";
+import { useNavigate } from "react-router-dom";
+import Header from "../../components/attendance/Header";
 import { DevicesIcon } from "@primer/octicons-react";
-import Usercard from "../components/cards/Usercard";
-import Active from "../widget/status/Active";
+import Usercard from "../../components/cards/Usercard";
+import Active from "../../widget/status/Active";
 import {
   PersonIcon,
   IssueOpenedIcon,
@@ -13,6 +14,7 @@ import {
 } from "@primer/octicons-react";
 
 const Attendance = () => {
+  const navigate = useNavigate();
   return (
     <div style={{ height: "100vh" }} className="flex relative flex-row">
       <Nav />
@@ -36,7 +38,10 @@ const Attendance = () => {
             <p className="font-bold text-zinc-400">Status</p>
           </div>
         </div>
-        <div className="flex flex-row justify-between items-center ml-6 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+        <div
+          onClick={() => navigate("/history")}
+          className="flex flex-row justify-between items-center ml-6 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1"
+        >
           <div className="flex flex-row items-center justify-center space-x-2">
             <div>
               <PersonIcon size={32} />
@@ -90,6 +95,39 @@ const Attendance = () => {
           <p>02-04-24</p>
           <p>02-04-24</p>
           <Active isActive="Absent" color="red" />
+        </div>
+        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+          <div className="flex flex-row items-center justify-center space-x-2">
+            <div>
+              <PersonIcon size={32} />
+            </div>
+            <p className="text-lg">X-ray</p>
+          </div>
+          <p>02-04-24</p>
+          <p>02-04-24</p>
+          <Active isActive="Present" color="green" />
+        </div>
+        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+          <div className="flex flex-row items-center justify-center space-x-2">
+            <div>
+              <PersonIcon size={32} />
+            </div>
+            <p className="text-lg">X-ray</p>
+          </div>
+          <p>02-04-24</p>
+          <p>02-04-24</p>
+          <Active isActive="Present" color="green" />
+        </div>
+        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+          <div className="flex flex-row items-center justify-center space-x-2">
+            <div>
+              <PersonIcon size={32} />
+            </div>
+            <p className="text-lg">X-ray</p>
+          </div>
+          <p>02-04-24</p>
+          <p>02-04-24</p>
+          <Active isActive="Present" color="green" />
         </div>
         <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
           <div className="flex flex-row items-center justify-center space-x-2">

@@ -17,7 +17,7 @@ const Nav = () => {
   return (
     <div
       style={{ height: "599px" }}
-      className="flex justify-end flex-col sticky bg-slate-100"
+      className="flex justify-end relative flex-col bg-slate-100"
     >
       <div style={{ marginTop: "10rem", possition: "sticky" }}>
         <div
