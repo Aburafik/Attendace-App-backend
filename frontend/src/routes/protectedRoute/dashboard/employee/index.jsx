@@ -7,8 +7,8 @@ const EmployeeRoute = () => {
   return (
     <Routes>
       <Route path="/employees" element={<Empolyees />} />
-      <Route path="/new" Component={NewEmployee} />
-      <Route path="/em-report" Component={ReportDetails} />
+      <Route path="/new" element={<NewEmployee />} />
+      <Route path="/em-report" element={<ReportDetails />} />
     </Routes>
   );
 };

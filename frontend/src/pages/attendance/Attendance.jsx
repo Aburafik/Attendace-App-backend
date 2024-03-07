@@ -20,7 +20,7 @@ const Attendance = () => {
       <Nav />
       <div className="mt-5">
         <h1>Today</h1>
-        <div className="flex flex-row justify-center ml-6 bg-slate-100 space-x-60 rounded-xl p-2">
+        <div className="flex flex-row justify-center ml-6 bg-slate-100 space-x-56 p-2">
           <div className="flex flex-col justify-center border-purple-600 bg-purple-400 rounded-xl items-center border p-2">
             <PeopleIcon size={40} />
             <p className="font-bold text-zinc-400">Employee</p>
@@ -40,7 +40,7 @@ const Attendance = () => {
         </div>
         <div
           onClick={() => navigate("/history")}
-          className="flex flex-row justify-between items-center ml-6 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1"
+          className="flex flex-row justify-between items-center ml-6 bg-slate-50 border border-zinc-200 mt-2 p-1"
         >
           <div className="flex flex-row items-center justify-center space-x-2">
             <div>
@@ -52,100 +52,71 @@ const Attendance = () => {
           <p>02-04-24</p>
           <Active isActive="Absent" color="red" />
         </div>
-        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+        <div
+          onClick={() => navigate("/history")}
+          className="flex flex-row justify-between items-center ml-6 bg-slate-50 border border-zinc-200 mt-2 p-1"
+        >
           <div className="flex flex-row items-center justify-center space-x-2">
             <div>
               <PersonIcon size={32} />
             </div>
-            <p className="text-lg">Ben</p>
+            <p className="text-lg">Meech</p>
           </div>
           <p>02-04-24</p>
           <p>02-04-24</p>
           <Active isActive="Present" color="green" />
         </div>
-        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+        <div
+          onClick={() => navigate("/history")}
+          className="flex flex-row justify-between items-center ml-6 bg-slate-50 border border-zinc-200 mt-2 p-1"
+        >
           <div className="flex flex-row items-center justify-center space-x-2">
             <div>
               <PersonIcon size={32} />
             </div>
-            <p className="text-lg">Pop can</p>
-          </div>
-          <p>02-04-24</p>
-          <p>02-04-24</p>
-          <Active isActive="Present" color="green" />
-        </div>
-        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
-          <div className="flex flex-row items-center justify-center space-x-2">
-            <div>
-              <PersonIcon size={32} />
-            </div>
-            <p className="text-lg">X-ray</p>
+            <p className="text-lg">Meech</p>
           </div>
           <p>02-04-24</p>
           <p>02-04-24</p>
           <Active isActive="Absent" color="red" />
         </div>
-        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+        <div
+          onClick={() => navigate("/history")}
+          className="flex flex-row justify-between items-center ml-6 bg-slate-50 border border-zinc-200 mt-2 p-1"
+        >
           <div className="flex flex-row items-center justify-center space-x-2">
             <div>
               <PersonIcon size={32} />
             </div>
-            <p className="text-lg">X-ray</p>
+            <p className="text-lg">Meech</p>
           </div>
           <p>02-04-24</p>
           <p>02-04-24</p>
           <Active isActive="Absent" color="red" />
         </div>
-        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+        <div
+          onClick={() => navigate("/history")}
+          className="flex flex-row justify-between items-center ml-6 bg-slate-50 border border-zinc-200 mt-2 p-1"
+        >
           <div className="flex flex-row items-center justify-center space-x-2">
             <div>
               <PersonIcon size={32} />
             </div>
-            <p className="text-lg">X-ray</p>
+            <p className="text-lg">Meech</p>
           </div>
           <p>02-04-24</p>
           <p>02-04-24</p>
           <Active isActive="Present" color="green" />
         </div>
-        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
+        <div
+          onClick={() => navigate("/history")}
+          className="flex flex-row justify-between items-center ml-6 bg-slate-50 border border-zinc-200 mt-2 p-1"
+        >
           <div className="flex flex-row items-center justify-center space-x-2">
             <div>
               <PersonIcon size={32} />
             </div>
-            <p className="text-lg">X-ray</p>
-          </div>
-          <p>02-04-24</p>
-          <p>02-04-24</p>
-          <Active isActive="Present" color="green" />
-        </div>
-        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
-          <div className="flex flex-row items-center justify-center space-x-2">
-            <div>
-              <PersonIcon size={32} />
-            </div>
-            <p className="text-lg">X-ray</p>
-          </div>
-          <p>02-04-24</p>
-          <p>02-04-24</p>
-          <Active isActive="Present" color="green" />
-        </div>
-        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
-          <div className="flex flex-row items-center justify-center space-x-2">
-            <div>
-              <PersonIcon size={32} />
-            </div>
-            <p className="text-lg">X-ray</p>
-          </div>
-          <p>02-04-24</p>
-          <p>02-04-24</p>
-          <Active isActive="Present" color="green" />
-        </div>
-        <div className="flex flex-row justify-between items-center ml-10 bg-slate-50 border border-zinc-400 rounded-xl mt-4 p-1">
-          <div className="flex flex-row items-center justify-center space-x-2">
-            <div>
-              <PersonIcon size={32} />
-            </div>
-            <p className="text-lg">X-ray</p>
+            <p className="text-lg">Meech</p>
           </div>
           <p>02-04-24</p>
           <p>02-04-24</p>

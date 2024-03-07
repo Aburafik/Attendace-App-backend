@@ -1,4 +1,5 @@
 import React from "react";
+import TextForms from "../../widget/TextForms";
 
 const NewReport = () => {
   return (
@@ -25,26 +26,7 @@ const NewReport = () => {
               />
             </div>
           </div>
-
-          <input
-            style={{ width: "40vw" }}
-            className=" p-2 rounded-lg border border-zinc-300"
-            type="text"
-            placeholder="Heading"
-          />
-
-          <textarea
-            style={{ width: "40vw" }}
-            className=" p-2 rounded-lg border border-zinc-300"
-            type="text"
-            placeholder="Overview"
-          />
-          <textarea
-            style={{ width: "40vw", height: "40vh" }}
-            className=" p-2 rounded-lg border border-zinc-300"
-            type="text"
-            placeholder="Report Details"
-          />
+          <TextForms />
           <button className="p-2 px-20 text-white rounded-lg bg-zinc-400">
             Submit
           </button>

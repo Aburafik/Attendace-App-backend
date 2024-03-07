@@ -4,11 +4,12 @@ import profile from "../../pages/profile";
 import Attendance from "../../pages/attendance/Attendance";
 import LeaveManagement from "../../pages/leave/LeaveManagement";
 import Reports from "../../pages/report/Reports";
-import Task from "../../pages/Task";
+import Task from "../../pages/task/Task";
 import EmployeeRoute from "./dashboard/employee";
 import NewReport from "../../pages/report/NewReport";
 import AttendanceHistory from "../../pages/attendance/AttendanceHistory";
 import ReportDetails from "../../pages/employee/ReportDetails";
+import Details from "../../pages/report/Details";
 
 export const ProtectedRoutes = () => {
   return (
@@ -20,8 +21,9 @@ export const ProtectedRoutes = () => {
       <Route path="/*" element={<EmployeeRoute />} />
       <Route path="/leave" element={<LeaveManagement />} />
       <Route path="/report" element={<Reports />} />
-      <Route path="/newReport" Component={NewReport} />
-      <Route path="/history" Component={AttendanceHistory} />{" "}
+      <Route path="/history" element={<AttendanceHistory />} />
+      <Route path="/edit" element={<Details />} />
+      <Route path="/newReport" element={<NewReport />} />
     </Routes>
   );
 };
