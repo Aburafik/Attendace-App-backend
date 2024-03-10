@@ -1,12 +1,15 @@
 import React from "react";
-import Nav from "../../components/Nav";
+import Nav from "../../components/navigationbar/Nav";
+import { useNavigate } from "react-router-dom";
 
 const LeaveManagement = () => {
+  const navigate = useNavigate();
   return (
     <div className="flex flex-row space-x-10">
       <Nav />
       <div className="flex flex-col">
         <div
+          onClick={() => navigate("leave-info")}
           className="flex flex-row bg-slate-200 p-2 justify-center items-center mt-2 rounded-xl"
           style={{ width: "55vw", height: "25vh" }}
         >

@@ -5,7 +5,7 @@ import { Button, Icon } from "semantic-ui-react";
 import { useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
-import Nav from "../components/Nav";
+import Nav from "../components/navigationbar/Nav";
 
 const Dashboard = () => {
   const buttonRef = useRef();

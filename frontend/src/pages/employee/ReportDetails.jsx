@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../../components/Nav";
+import Nav from "../../components/navigationbar/Nav";
 import Reportcard from "../../components/cards/Reportcard";
 
 const ReportDetails = () => {

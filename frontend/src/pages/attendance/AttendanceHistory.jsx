@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../../components/Nav";
+import Nav from "../../components/navigationbar/Nav";
 import History from "../../components/attendance/History";
 import Header from "../../components/attendance/Header";
 

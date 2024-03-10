@@ -1,5 +1,5 @@
 import React from "react";
-import Nav from "../../components/Nav";
+import Nav from "../../components/navigationbar/Nav";
 import Usercard from "../../components/cards/Usercard";
 import { useNavigate } from "react-router-dom";
 import { PlusCircleIcon } from "@primer/octicons-react";
