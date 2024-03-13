@@ -4,6 +4,7 @@ import { Provider } from "react-redux";
 import { useState, useEffect } from "react";
 import Store from "./store/Store";
 import { AppRouters } from "./routes/index";
+import Layout from "./components/Layout";
 
 function App() {
   const [user, setUser] = useState(null);
@@ -27,7 +28,9 @@ function App() {
     <React.StrictMode>
       <Provider store={Store}>
         <Router>
-          <AppRouters />
+          <Layout>
+            <AppRouters />
+          </Layout>
         </Router>
       </Provider>
     </React.StrictMode>

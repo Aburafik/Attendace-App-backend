@@ -6,8 +6,7 @@ import { PlusCircleIcon, PencilIcon, TrashIcon } from "@primer/octicons-react";
 const Reports = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-row space-x-10">
-      <Nav />
+    <div className="flex flex-row space-x-4 justify-between relative">
       <div className="flex flex-col">
         <div
           style={{ maxWidth: "60vw", maxheight: "auto" }}

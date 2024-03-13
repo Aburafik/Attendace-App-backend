@@ -6,11 +6,10 @@ const Task = () => {
   return (
     <div className="flex flex-row sticky">
       <div className="sticky">
-        <Nav />
       </div>
       <div>
         <div
-          style={{ minWidth: "186vh", height: "3rem" }}
+          style={{ minWidth: "77vw", height: "3rem" }}
           className="bg-zinc-200 flex flex-row absolute justify-between p-2"
         >
           <Topbar />

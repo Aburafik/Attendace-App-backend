@@ -17,7 +17,6 @@ const Attendance = () => {
   const navigate = useNavigate();
   return (
     <div style={{ height: "100vh" }} className="flex relative flex-row">
-      <Nav />
       <div className="mt-5">
         <h1>Today</h1>
         <div

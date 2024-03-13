@@ -138,6 +138,11 @@ const createEmployee = async (req, res) => {
   }
 };
 
+const getAllEmployees = async (req, res) => {
+  const employees = await Employee.find();
+
+  return res.json(employees).status(200);
+};
 // Admin-only route to get attendance records of all employees
 const getAllAttendanceRecords = async (req, res) => {
   try {
@@ -226,6 +231,7 @@ module.exports = {
   register,
   login,
   createEmployee,
+  getAllEmployees,
   notifications,
   getAllAttendanceRecords,
   getSingleRecord,

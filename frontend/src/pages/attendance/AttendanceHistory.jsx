@@ -6,7 +6,6 @@ import Header from "../../components/attendance/Header";
 const AttendanceHistory = () => {
   return (
     <div className="flex flex-row">
-      <Nav />
       <div className="flex flex-col items-center">
         <Header />
       </div>
