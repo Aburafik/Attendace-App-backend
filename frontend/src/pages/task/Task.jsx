@@ -1,27 +1,95 @@
 import React from "react";
-import Nav from "../../components/navigationbar/Nav";
-import Topbar from "../../widget/status/bar/Topbar";
+import DeviceSizeChecker from "../../features/screensize/DeviceSizeChecker";
 
 const Task = () => {
+  const { isPhone } = DeviceSizeChecker();
   return (
-    <div className="flex flex-row sticky">
-      <div className="sticky">
-      </div>
-      <div>
+    <div className="flex flex-row sticky px-10 justify-around">
+      <div className="w-full">
         <div
-          style={{ minWidth: "77vw", height: "3rem" }}
-          className="bg-zinc-200 flex flex-row absolute justify-between p-2"
+          style={{ minWidth: "50vw", height: "3rem" }}
+          className="bg-teal-500 flex flex-row sticky justify-between p-2 rounded-lg my-4"
         >
-          <Topbar />
-          <button className="bg-slate-600 px-3 p1 text-white">New</button>
+          <button className="bg-amber-50 px-3 py-1 rounded-md font-semibold text-zinc-600">
+            New
+          </button>
         </div>
-        <div style={{ maxWidth: "60vw", marginTop: "4rem" }}>
-          <div style={{ marginLeft: "2vw" }} className="bg-slate-100 mt-2">
-            <div className="flex flex-row items-center justify-between bg-blue-200 p-1">
-              <h1>Task 1</h1>
+        <div
+          style={{
+            minWidth: `${isPhone ? "50vw" : "80vw"}`,
+            marginTop: "1rem",
+          }}
+          className="mx-auto"
+        >
+          <div
+            style={{ marginLeft: "2vw" }}
+            className="bg-white mt-2 rounded-lg shadow-md"
+          >
+            <div className="flex flex-row items-center justify-between bg-blue-200 p-1 rounded-t-lg">
+              <h1 className="font-bold text-xl">Task 1</h1>
               <div className="flex flex-row space-x-3">
-                <p>status</p>
-                <p className="text-green-400">completed</p>
+                <p className="font-semibold">Status:</p>
+                <p className="text-green-400 font-semibold">Completed</p>
+              </div>
+            </div>
+            <div className="p-1">
+              <p>
+                Task Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Deserunt nobis illo saepe distinctio. Ad blanditiis doloremque,
+                architecto maiores quae repudiandae voluptatum exercitationem
+                reprehenderit veniam quos amet officiis cum sint in?
+              </p>
+            </div>
+          </div>
+          <div
+            style={{ marginLeft: "2vw" }}
+            className="bg-white mt-2 rounded-lg shadow-md"
+          >
+            <div className="flex flex-row items-center justify-between bg-blue-200 p-1 rounded-t-lg">
+              <h1 className="font-bold text-xl">Task 1</h1>
+              <div className="flex flex-row space-x-3">
+                <p className="font-semibold">Status:</p>
+                <p className="text-green-400 font-semibold">Completed</p>
+              </div>
+            </div>
+            <div className="p-1">
+              <p>
+                Task Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Deserunt nobis illo saepe distinctio. Ad blanditiis doloremque,
+                architecto maiores quae repudiandae voluptatum exercitationem
+                reprehenderit veniam quos amet officiis cum sint in?
+              </p>
+            </div>
+          </div>
+          <div
+            style={{ marginLeft: "2vw" }}
+            className="bg-white mt-2 rounded-lg shadow-md"
+          >
+            <div className="flex flex-row items-center justify-between bg-blue-200 p-1 rounded-t-lg">
+              <h1 className="font-bold text-xl">Task 1</h1>
+              <div className="flex flex-row space-x-3">
+                <p className="font-semibold">Status:</p>
+                <p className="text-green-400 font-semibold">Completed</p>
+              </div>
+            </div>
+            <div className="p-1">
+              <p>
+                Task Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                Deserunt nobis illo saepe distinctio. Ad blanditiis doloremque,
+                architecto maiores quae repudiandae voluptatum exercitationem
+                reprehenderit veniam quos amet officiis cum sint in?
+              </p>
+            </div>
+          </div>
+          <div
+            style={{ marginLeft: "2vw" }}
+            className="bg-white mt-2 rounded-lg shadow-md"
+          >
+            <div className="flex flex-row items-center justify-between bg-blue-200 p-1 rounded-t-lg">
+              <h1 className="font-bold text-xl">Task 1</h1>
+              <div className="flex flex-row space-x-3">
+                <p className="font-semibold">Status:</p>
+                <p className="text-green-400 font-semibold">Completed</p>
               </div>
             </div>
             <div className="p-1">
@@ -37,15 +105,15 @@ const Task = () => {
       </div>
       <div
         style={{ height: "40vh" }}
-        className=" flex flex-col sticky mt-16 ml-5 bg-blue-200 justify-around p-2"
+        className="flex flex-col sticky mt-16 ml-5 bg-blue-200 justify-around p-2 rounded-lg"
       >
         <div className="flex flex-col space-y-1 items-center justify-start">
-          <p className="font-serif">Task completed</p>
-          <p>5</p>
+          <p className="font-serif text-lg font-bold">Task completed</p>
+          <p className="text-2xl font-bold">5</p>
         </div>
         <div className="flex flex-col space-y-1 items-center justify-start">
-          <p className="font-serif">To Do</p>
-          <p>4</p>
+          <p className="font-serif text-lg font-bold">To Do</p>
+          <p className="text-2xl font-bold">4</p>
         </div>
       </div>
     </div>

@@ -39,7 +39,7 @@ const Reports = () => {
       <div className="mt-2 sticky">
         <button
           className="bg-teal-300 px-7 py-2 rounded-xl items-center"
-          onClick={() => navigate("/new-report")}
+          onClick={() => navigate("new-report")}
         >
           <PlusCircleIcon size={24} className="mr-2" />
           New

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const DeviceSizeChecker = () => {
   const [isTablet, setIsTablet] = useState(false);
@@ -8,6 +8,7 @@ const DeviceSizeChecker = () => {
 
   useEffect(() => {
     const checkDeviceSize = () => {
+      
       screenWidth = window.innerWidth;
 
       // Define the breakpoints for tablet and phone views
