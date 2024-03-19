@@ -1,24 +1,30 @@
 // src/models/TaskReport.js
 const mongoose = require("mongoose");
 
-const taskSchema = new mongoose.Schema({
-  employee: {
+const projectSchema = new mongoose.Schema({
+          internId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Employee",
+    ref: "Intern",
     required: true,
   },
   title: {
     type: String,
-    required: true,
   },
   description: {
     type: String,
-    required: true,
   },
+  githubUrl: {
+    type: String,
+  },
+
+  hostedUrl: {
+    type: String,
+  },
+
   timestamp: {
     type: Date,
     default: Date.now,
   },
 });
 
-module.exports = mongoose.model("Task", taskSchema);
+module.exports = mongoose.model("Projects", projectSchema);

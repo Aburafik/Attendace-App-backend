@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 const leaveRequestSchema = new mongoose.Schema({
-  employee: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee' },
+  Intern: { type: mongoose.Schema.Types.ObjectId, ref: 'Intern' },
   startDate: Date,
   endDate: Date,
   reason: String,

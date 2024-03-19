@@ -46,7 +46,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/api/admin", router);
-app.use("/api/employee", require("./src/routes/employeeRoute.js"));
+app.use("/api/intern", require("./src/routes/internRoute.js"));
 
 
 server.listen(port, () => {
