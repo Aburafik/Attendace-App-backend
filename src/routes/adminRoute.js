@@ -6,18 +6,19 @@ const { register,
         login, 
         getAllAttendanceRecords, 
         getSingleRecord, 
-        updateInternLeaveRequest,
+        updateEmployeeLeaveRequest,
         notifications, 
         getAllLeaveRequest,
-        } = require('../controllers/adminController')
+        createEmployee } = require('../controllers/adminController')
+
+// const moment = require("moment");
 
 
-
-router.post("/signUp", register).post('/login', login);
+router.post("/register", register).post('/login', login).post("/create-employee", createEmployee);
 router.post("/notifications", notifications)
 router.get("/attendance/all-records", authMiddleware, isAdmin, getAllAttendanceRecords)
-router.get("/attendance/InternId", authMiddleware, isAdmin, getSingleRecord)
+router.get("/attendance/employeeId", authMiddleware, isAdmin, getSingleRecord)
 router.get("/leave-requests", authMiddleware, isAdmin, getAllLeaveRequest)
-router.patch("/update-leave/:leaveId", authMiddleware, isAdmin, updateInternLeaveRequest)
+router.patch("/update-leave/:leaveId", authMiddleware, isAdmin, updateEmployeeLeaveRequest)
 
 module.exports = { router };

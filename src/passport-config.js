@@ -1,17 +1,17 @@
 const passport = require('passport');
 const LocalStrategy = require('passport-local').Strategy;
-const Admin = require('./models/admin');
+const Employee = require('./models/Employee.js');
 const bcrypt = require('bcrypt');
 
-passport.use('local-Admin', new LocalStrategy((email, done) => {
+passport.use('local-employee', new LocalStrategy((staffId, password, done) => {
           console.log(email)
           console.log(password)
-  Admin.findOne({email}, (err, Admin) => {
+  Employee.findOne({staffId:staffId}, (err, employee) => {
 
     if (err) return done(err);
-    if (!Admin) return done(null, false);
-    if (!bcrypt.compareSync(password, Admin.password)) return done(null, false);
-    return done(null, Admin);
+    if (!employee) return done(null, false);
+    if (!bcrypt.compareSync(password, employee.password)) return done(null, false);
+    return done(null, employee);
   });
 }));
 
@@ -20,7 +20,7 @@ passport.serializeUser((user, done) => {
 });
 
 passport.deserializeUser((id, done) => {
-  Admin.findById(id, (err, user) => {
+  Employee.findById(id, (err, user) => {
     done(err, user);
   });
 });

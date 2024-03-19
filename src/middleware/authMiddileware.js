@@ -1,4 +1,4 @@
-const Admin = require('../models/admin')
+const Employee = require('../models/Employee')
 const jwt = require('jsonwebtoken')
 
 const authMiddleware = async (req, res, next)=> {
@@ -10,7 +10,7 @@ const authMiddleware = async (req, res, next)=> {
             if (token) {
                 // if there is token, we verify the token with the secret key
                 const decoded = jwt.verify(token, process.env.JWT_SECRET)
-                const user = await Admin.findById(decoded?.id);
+                const user = await Employee.findById(decoded?.id);
                 req.user = user;
                 next();
             }
@@ -24,7 +24,7 @@ const authMiddleware = async (req, res, next)=> {
 
 const isAdmin = async (req, res, next) => {
     const { email } = req.user
-    const User = await Admin.findOne({ email })
+    const User = await Employee.findOne({ email })
 
     // Checking to see if the loggedin user is an admin
     if (User.isAdmin === false){

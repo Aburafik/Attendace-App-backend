@@ -2,11 +2,15 @@
 const mongoose = require('mongoose');
 
 const reportsSchema = new mongoose.Schema({
-  internId: { type: mongoose.Schema.Types.ObjectId, ref: 'Intern' },
+  employee: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee' },
+  weeklyReports:[{
+          month: String,
           week: String,
           title: String,
           body: String,
           timeStamp:Date,
+          status: String, 
+  }]
 });
 
 module.exports = mongoose.model('Reports', reportsSchema);

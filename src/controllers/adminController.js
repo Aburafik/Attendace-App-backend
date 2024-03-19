@@ -1,7 +1,6 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-// const Intern = require("../models/Intern");
-const Admin = require("../models/admin");
+const Employee = require("../models/Employee");
 const Leave= require("../models/LeaveRequest");
 const Notification = require("../models/notifications");
 const AttendanceRecord = require("../models/AttendanceReports");
@@ -20,31 +19,40 @@ const io = socketIO(server, {
 // const moment = require("moment");
 
 const register = async (req, res) => {
-  const { email, name, password} = req.body;
+  const { email, staffId, name, password, role } = req.body;
   // Check if the email is already taken
-  const existingAdmin = await Admin.findOne({email});
-  // Check if Admin  Id is already taken
+  const existingAdmin = await Employee.findOne({ email, isAdmin: true });
+  // Check if employee  Id is already taken
+  const existingEmployeeId = await Employee.findOne({ staffId, isAdmin: true });
+
   if (existingAdmin) {
     return res
       .status(400)
       .json({ message: "Admin with this email already exists." });
   }
- 
+  if (existingEmployeeId) {
+    return res
+      .status(400)
+      .json({ message: "Employee with this staff Id already exists." });
+  }
 
   // Hash the password before storing it in the database
   const hashedPassword = await bcrypt.hash(password, 10);
   // console.log(hashedPassword)
 
-  const newAdmin = new Admin({
+  const newAdmin = new Employee({
     email,
+    staffId,
     name,
     dateJoined: new Date(),
+    role,
     password: hashedPassword,
+    isAdmin: true,
   });
 
   try {
     await newAdmin.save();
-    const token = jwt.sign({userId: newAdmin._id }, "secret-key", {
+    const token = jwt.sign({ userId: newAdmin._id }, "secret-key", {
       expiresIn: "356d",
     });
     const newUser = {
@@ -62,18 +70,14 @@ const register = async (req, res) => {
     res.status(500).send("Error registering admin.");
   }
 
+  //Login user
 };
-
-
-
-
-
 
 const login = async (req, res) => {
   const { email, password } = req.body;
 
   // Find the admin by email and check if they are an admin
-  const admin = await Admin.findOne({email});
+  const admin = await Employee.findOne({ email, isAdmin: true });
 
   if (!admin) {
     return res.status(401).send("Admin not found.");
@@ -83,6 +87,7 @@ const login = async (req, res) => {
   if (bcrypt.compareSync(password, admin.password)) {
     const user = {
       email: admin.email,
+      staffId: admin.staffId,
       role: admin.role,
       name: admin.name,
       token: generateToken(admin?.id),
@@ -95,12 +100,50 @@ const login = async (req, res) => {
   }
 };
 
-// Create Intern route
+// Create employee route
+const createEmployee = async (req, res) => {
+  const { email, staffId, name, password, role } = req.body;
 
-// Admin-only route to get attendance records of all Interns
+  // Check if the email is already taken
+  const existingEmployee = await Employee.findOne({ email, isAdmin: false });
+  const existingEmployeeStaffId = await Employee.findOne({
+    staffId,
+    isAdmin: false,
+  });
+
+  if (existingEmployee) {
+    return res.status(400).send("Employee with this email already exists.");
+  }
+  //Check if the staff id is already taken
+  if (existingEmployeeStaffId) {
+    return res.status(400).send("Employee with this staffId already exists.");
+  }
+
+  // Hash the password before storing it in the database
+  const hashedPassword = await bcrypt.hash(password, 10);
+
+  const newEmployee = new Employee({
+    email,
+    staffId,
+    name,
+    role,
+    password: hashedPassword,
+    isAdmin: false,
+  });
+
+  try {
+    await newEmployee.save();
+    res.status(201).send("Employee created successfully.");
+  } catch (err) {
+    console.log(err);
+    res.status(500).send("Error creating employee.");
+  }
+};
+
+// Admin-only route to get attendance records of all employees
 const getAllAttendanceRecords = async (req, res) => {
   try {
-    // Retrieve attendance records for all Interns
+    // Retrieve attendance records for all employees
     const records = await AttendanceRecord.find().sort({ timestamp: "desc" });
 
     res.status(200).json(records);
@@ -110,13 +153,13 @@ const getAllAttendanceRecords = async (req, res) => {
   }
 };
 
-// Admin-only route to query attendance records for a particular Intern
+// Admin-only route to query attendance records for a particular employee
 const getSingleRecord = async (req, res) => {
-  const { InternId } = req.body;
-  //console.log(InternId)
+  const { employeeId } = req.body;
+  //console.log(employeeId)
   try {
-    // Retrieve attendance records for the specified Intern
-    const records = await AttendanceRecord.find({ Intern: InternId }).sort({
+    // Retrieve attendance records for the specified employee
+    const records = await AttendanceRecord.find({ employee: employeeId }).sort({
       timestamp: "desc",
     });
 
@@ -139,7 +182,7 @@ const notifications = async (req, res) => {
 
     await newNotification.save();
 
-    // Broadcast the new notification to all connected Interns
+    // Broadcast the new notification to all connected employees
     //   const notifications = await Notification.find()
 
     io.emit("newNotification", newNotification);
@@ -152,10 +195,10 @@ const notifications = async (req, res) => {
 };
 
 
-// Admin-only route to get attendance records of all Interns
+// Admin-only route to get attendance records of all employees
 const getAllLeaveRequest = async (req, res) => {
           try {
-            // Retrieve leave records for all Interns
+            // Retrieve leave records for all employees
             const leaveRecords = await Leave.find().sort({ timestamp: "desc" });
         
             res.status(200).json(leaveRecords);
@@ -166,7 +209,7 @@ const getAllLeaveRequest = async (req, res) => {
         };
 
 
-const updateInternLeaveRequest = async (req, res) => {
+const updateEmployeeLeaveRequest = async (req, res) => {
   try {
     const { status } = req.body;
     const leaveId = req.params.leaveId;
@@ -186,10 +229,11 @@ const updateInternLeaveRequest = async (req, res) => {
 module.exports = {
   register,
   login,
+  createEmployee,
   notifications,
   getAllAttendanceRecords,
   getSingleRecord,
-  updateInternLeaveRequest,
+  updateEmployeeLeaveRequest,
   getAllLeaveRequest,
   express,
   io,

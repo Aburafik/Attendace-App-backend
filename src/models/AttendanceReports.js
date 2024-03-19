@@ -2,7 +2,7 @@
 const mongoose = require('mongoose');
 
 const attendanceRecordSchema = new mongoose.Schema({
-  Intern: { type: mongoose.Schema.Types.ObjectId, ref: 'Intern' },
+  employee: { type: mongoose.Schema.Types.ObjectId, ref: 'Employee' },
   email: {
           type: String,
           required: true,
