@@ -2,36 +2,35 @@ require("dotenv").config();
 const session = require("express-session");
 const passport = require("passport");
 const bodyParser = require("body-parser");
-const morgan = require('morgan')
+const morgan = require("morgan");
 require("./src/passport-config.js");
 // const httpProxy = require('http-proxy');
-const cors = require('cors')
+const cors = require("cors");
 const { router } = require("./src/routes/adminRoute");
-const {app, server, io}= require('./src/controllers/adminController.js');
-const { connectToDb } = require('./src/dataBase/connectToDb.js')
+const { app, server, io } = require("./src/controllers/adminController.js");
+const { connectToDb } = require("./src/dataBase/connectToDb.js");
 // const app = require('express')()
 
-const port = process.env.PORT || 3000;
+const port = 5000;
 
 app.use(cors());
-app.use(morgan('dev'))
+app.use(morgan("dev"));
 
-connectToDb()
+connectToDb();
 
 io.on("connection", (socket) => {
-    console.log("Client connected");
-  
-    // Listen for new notification events
-    socket.on("newNotification", (notification) => {
-      io.emit("newNotification", notification); // Broadcast to all connected clients
-      console.log("Notification received:", notification);
-    });
-  
-    socket.on("disconnect", () => {
-      console.log("Client disconnected");
-    });
-});
+  console.log("Client connected");
 
+  // Listen for new notification events
+  socket.on("newNotification", (notification) => {
+    io.emit("newNotification", notification); // Broadcast to all connected clients
+    console.log("Notification received:", notification);
+  });
+
+  socket.on("disconnect", () => {
+    console.log("Client disconnected");
+  });
+});
 
 app.use(bodyParser.json());
 app.use(
@@ -47,7 +46,6 @@ app.use(passport.session());
 
 app.use("/api/admin", router);
 app.use("/api/employee", require("./src/routes/employeeRoute.js"));
-
 
 server.listen(port, () => {
   console.log(`Server is running on port ${port}`);

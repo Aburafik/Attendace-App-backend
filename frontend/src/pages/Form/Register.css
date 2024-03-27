@@ -1,0 +1,131 @@
+/* * {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+} */
+
+/* body {
+  font-family: "Roboto";
+  min-height: 100vh;
+} */
+
+.spinner {
+  justify-self: center;
+  align-self: center;
+}
+
+.password-Check {
+  position: relative;
+  background-color: none;
+  text-align: left;
+  flex-direction: column;
+  /* justify-content: start; */
+  justify-content: space-between;
+  /* left: 3rem; */
+  /* top: 10rem; */
+}
+
+.wrong-text {
+  margin-top: 0.5rem;
+  color: rgb(159, 14, 14);
+  width: 85%;
+  /* position: relative; */
+  /* bottom: 2rem; */
+}
+
+.pass-text {
+  margin-top: 0.5rem;
+  color: rgb(93, 246, 147);
+  position: relative;
+  /* flex: 1; */
+}
+
+.Form {
+  /* text-align: center; */
+  /* align-items: center; */
+  /* justify-self: center; */
+  /* flex-direction: column; */
+  padding: 1rem;
+  min-height: 85vh;
+  max-width: 75vh;
+  left: 35%;
+  /* top: 0rem; */
+  border: 1.5px solid #ccc;
+  border-radius: 0.5rem;
+  position: sticky;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.sbt-form {
+  text-align: center;
+  /* align-items: center; */
+  justify-self: center;
+  flex-direction: column;
+  padding: 1rem;
+  min-height: 85vh;
+  max-width: 75vh;
+  left: 35%;
+  margin-top: 2rem;
+  border: 1.5px solid #ccc;
+  border-radius: 0.5rem;
+  position: sticky;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.Input {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: black solid 0.18rem;
+  border-radius: 0.3rem;
+  background-color: rgb(238, 235, 235);
+  color: rgb(2, 2, 40);
+  width: 90%;
+  height: 50px;
+  /* left: 1.5rem; */
+  top: 2rem;
+  margin-top: .2em;
+  /* position: relative; */
+}
+.submit-btn {
+  /* position: relative; */
+  /* text-align: center; */
+  border-style: none;
+  border-left: gray solid 0.1rem;
+  border-bottom: grey solid 0.1rem;
+  border-radius: 0.3rem;
+  background-color: black;
+  color: white;
+  /* top: 12rem; */
+  /* left: 8rem; */
+  width: 30vh;
+  height: 7vh;
+}
+.next-btn {
+  position: relative;
+  border-style: none;
+  border-left: gray solid 0.1rem;
+  border-bottom: grey solid 0.1rem;
+  border-radius: 0.3rem;
+  background-color: black;
+  color: white;
+  top: 2rem;
+  /* left: 8rem; */
+  width: 40vh;
+  height: 7vh;
+}
+
+.Input-R1 {
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: black solid 0.18rem;
+  border-radius: 0.3rem;
+  background-color: rgb(238, 235, 235);
+  color: rgb(2, 2, 40);
+  width: 90%;
+  height: 60px;
+  /* left: 1.5rem; */
+  /* top: 2rem;
+  margin-top: 2em; */
+}
