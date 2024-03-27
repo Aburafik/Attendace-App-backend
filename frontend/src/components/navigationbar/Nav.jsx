@@ -1,12 +1,8 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import {
-  NoteIcon,
-  ChecklistIcon,
-  PeopleIcon,
-  BellIcon,
-} from "@primer/octicons-react";
+import { MultiSelectIcon, BellIcon } from "@primer/octicons-react";
+import sidebarItems from "../sideBarItem";
 
 const SidebarItem = ({ label, icon, onClick }) => (
   <div onClick={onClick} className="sidebar-item">
@@ -30,42 +26,14 @@ const Sidebar = () => {
     setNavBtn(!navbtn);
   };
 
-  const sidebarItems = [
-    {
-      label: "Attendance",
-      icon: <NoteIcon className="mr-6 text-zinc-600" size={30} />,
-      route: "attendance",
-    },
-    {
-      label: "Task",
-      icon: <NoteIcon className="mr-6 text-zinc-600" size={30} />,
-      route: "task",
-    },
-    {
-      label: "Reports",
-      icon: <ChecklistIcon className="mr-6 text-zinc-600" size={30} />,
-      route: "report",
-    },
-    {
-      label: "Employees",
-      icon: <PeopleIcon className="mr-6 text-zinc-600" size={30} />,
-      route: "employee",
-    },
-    {
-      label: "Leave Management",
-      icon: <ChecklistIcon className="mr-6 text-zinc-600" size={30} />,
-      route: "leave",
-    },
-  ];
-
   return (
     <div>
       {navbtn && (
         <button
-          className="bg-teal-300 px-5 py-1 rounded-2xl"
+          className="bg-blue-800 p-3 items-center justify-center text-white"
           onClick={handleNavBtn}
         >
-          click
+          <MultiSelectIcon size={33} />
         </button>
       )}
       {navigationbar && (

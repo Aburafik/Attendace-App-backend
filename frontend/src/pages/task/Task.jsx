@@ -8,7 +8,7 @@ const Task = () => {
       <div className="w-full">
         <div
           style={{ minWidth: "50vw", height: "3rem" }}
-          className="bg-teal-500 flex flex-row sticky justify-between p-2 rounded-lg my-4"
+          className="bg-blue-800 flex flex-row sticky justify-between p-2 rounded-lg my-4"
         >
           <button className="bg-amber-50 px-3 py-1 rounded-md font-semibold text-zinc-600">
             New

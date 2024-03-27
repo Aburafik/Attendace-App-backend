@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Employeecard from "../../components/cards/Employeecard";
 import { useNavigate } from "react-router-dom";
 import { PlusCircleIcon } from "@primer/octicons-react";
-import { fetchEmployees } from "../../features/employee/Employeeslice";
+import { fetchEmployees } from "../../features/slice/Employeeslice";
 
 const Employees = () => {
   const employees = useSelector((state) => state.employees.employees);

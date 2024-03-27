@@ -24,8 +24,8 @@ router.post("/notifications", notifications);
 router.get("/employees", getAllEmployees);
 router.get(
   "/attendance/all-records",
-  authMiddleware,
-  isAdmin,
+  // authMiddleware,
+  // isAdmin,
   getAllAttendanceRecords
 );
 router.get("/attendance/employeeId", authMiddleware, isAdmin, getSingleRecord);

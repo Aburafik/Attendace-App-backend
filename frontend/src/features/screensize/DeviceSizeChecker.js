@@ -3,23 +3,21 @@ import React, { useState, useEffect, useRef } from "react";
 const DeviceSizeChecker = () => {
   const [isTablet, setIsTablet] = useState(false);
   const [isPhone, setIsPhone] = useState(false);
-
-  let screenWidth;
+  const screenWidthRef = useRef(0);
 
   useEffect(() => {
     const checkDeviceSize = () => {
-      
-      screenWidth = window.innerWidth;
+      screenWidthRef.current = window.innerWidth;
 
       // Define the breakpoints for tablet and phone views
       const tabletBreakpoint = 768; // Example breakpoint for tablet view
       const phoneBreakpoint = 576; // Example breakpoint for phone view
 
       // Check if the screen size corresponds to tablet view
-      if (screenWidth >= tabletBreakpoint) {
+      if (screenWidthRef.current >= tabletBreakpoint) {
         setIsTablet(true);
         setIsPhone(false);
-      } else if (screenWidth >= phoneBreakpoint) {
+      } else if (screenWidthRef.current >= phoneBreakpoint) {
         setIsTablet(false);
         setIsPhone(true);
       } else {
@@ -36,7 +34,7 @@ const DeviceSizeChecker = () => {
     return () => {
       window.removeEventListener("resize", checkDeviceSize);
     };
-  }, [screenWidth]);
+  }, [screenWidthRef]);
 
   return { isPhone, isTablet };
 };
