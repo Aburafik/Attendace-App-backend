@@ -14,7 +14,7 @@ const Employees = () => {
   }, [dispatch]);
 
   return (
-    <div className="container mx-auto py-4">
+    <div className="container mx-auto py-4 mt-10">
       {employees.length > 0 ? (
         <div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">

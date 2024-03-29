@@ -4,10 +4,10 @@ import DeviceSizeChecker from "../../features/screensize/DeviceSizeChecker";
 const Task = () => {
   const { isPhone } = DeviceSizeChecker();
   return (
-    <div className="flex flex-row sticky px-10 justify-around">
+    <div className="flex flex-row sticky px-10 justify-around mt-10">
       <div className="w-full">
         <div
-          style={{ minWidth: "50vw", height: "3rem" }}
+          style={{ maxWidth: "900px", height: "3rem" }}
           className="bg-blue-800 flex flex-row sticky justify-between p-2 rounded-lg my-4"
         >
           <button className="bg-amber-50 px-3 py-1 rounded-md font-semibold text-zinc-600">
@@ -22,7 +22,7 @@ const Task = () => {
           className="mx-auto"
         >
           <div
-            style={{ marginLeft: "2vw" }}
+            style={{ marginLeft: "2vw", maxWidth: "800px" }}
             className="bg-white mt-2 rounded-lg shadow-md"
           >
             <div className="flex flex-row items-center justify-between bg-blue-200 p-1 rounded-t-lg">
@@ -42,7 +42,7 @@ const Task = () => {
             </div>
           </div>
           <div
-            style={{ marginLeft: "2vw" }}
+            style={{ marginLeft: "2vw", maxWidth: "800px" }}
             className="bg-white mt-2 rounded-lg shadow-md"
           >
             <div className="flex flex-row items-center justify-between bg-blue-200 p-1 rounded-t-lg">
@@ -62,7 +62,7 @@ const Task = () => {
             </div>
           </div>
           <div
-            style={{ marginLeft: "2vw" }}
+            style={{ marginLeft: "2vw", maxWidth: "800px" }}
             className="bg-white mt-2 rounded-lg shadow-md"
           >
             <div className="flex flex-row items-center justify-between bg-blue-200 p-1 rounded-t-lg">
@@ -82,7 +82,7 @@ const Task = () => {
             </div>
           </div>
           <div
-            style={{ marginLeft: "2vw" }}
+            style={{ marginLeft: "2vw", maxWidth: "800px" }}
             className="bg-white mt-2 rounded-lg shadow-md"
           >
             <div className="flex flex-row items-center justify-between bg-blue-200 p-1 rounded-t-lg">
@@ -104,7 +104,7 @@ const Task = () => {
         </div>
       </div>
       <div
-        style={{ height: "40vh" }}
+        style={{ height: "40vh", maxWidth: "800px" }}
         className="flex flex-col sticky mt-16 ml-5 bg-blue-200 justify-around p-2 rounded-lg"
       >
         <div className="flex flex-col space-y-1 items-center justify-start">

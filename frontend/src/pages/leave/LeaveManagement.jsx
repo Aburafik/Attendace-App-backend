@@ -6,7 +6,7 @@ import { PersonIcon } from "@primer/octicons-react";
 const LeaveManagement = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-row space-x-10">
+    <div className="flex flex-row space-x-10 mt-14">
       <div className="flex flex-col">
         <div
           onClick={() => navigate("leave-info")}

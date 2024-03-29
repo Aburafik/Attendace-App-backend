@@ -14,14 +14,16 @@ import {
 const Reports = () => {
   const navigate = useNavigate();
   return (
-    <div className="flex flex-row space-x-4 justify-around relative">
+    <div className="flex flex-row space-x-4 justify-around relative mt-14">
       <div className="flex flex-col">
         <Element name="ScrollableSection">
           <div
             style={{ maxWidth: "60vw", maxHeight: "auto" }}
-            className="flex-col space-y-2 bg-slate-50 border relative border-zinc-400 mt-2"
+            className="flex-col space-y-2 bg-white border relative border-zinc-400 mt-2 shadow-md rounded-md"
           >
-            <h1 className="font-semibold text-xl bg-blue-200 p-3">Title</h1>
+            <h1 className="font-semibold text-xl bg-blue-200 p-3 rounded-t-md">
+              Title
+            </h1>
             <p className="px-3 py-2 prose prose-sm text-gray-700">
               Body Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Deleniti quo rerum nesciunt porro magni praesentium sit optio
@@ -44,9 +46,9 @@ const Reports = () => {
           </div>
           <div
             style={{ maxWidth: "60vw", maxHeight: "auto" }}
-            className="flex-col space-y-2 bg-slate-50 border relative border-zinc-400 mt-2"
+            className="flex-col space-y-2 bg-white border relative border-zinc-400 mt-2 shadow-md rounded-md"
           >
-            <h1 className="font-semibold text-xl bg-blue-200 p-3">Title</h1>
+            <h1 className="font-semibold text-xl bg-blue-200 p-3 rounded-t-md">Title</h1>
             <p className="px-3 py-2 prose prose-sm text-gray-700">
               Body Lorem ipsum dolor sit amet consectetur adipisicing elit.
               Deleniti quo rerum nesciunt porro magni praesentium sit optio

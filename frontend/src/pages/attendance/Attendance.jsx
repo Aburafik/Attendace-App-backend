@@ -17,7 +17,7 @@ const Attendance = () => {
   }, [dispatch]);
 
   return (
-    <div style={{ height: "100vh" }} className="flex relative flex-row">
+    <div style={{ height: "100vh" }} className="flex relative flex-row mt-10">
       <div className="mt-5">
         <Attendancebar />
         {/* {records &&

@@ -1,13 +1,18 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { MultiSelectIcon, BellIcon } from "@primer/octicons-react";
+import {
+  MultiSelectIcon,
+  BellIcon,
+  CommentDiscussionIcon,
+  PersonIcon,
+} from "@primer/octicons-react";
 import sidebarItems from "../sideBarItem";
 
 const SidebarItem = ({ label, icon, onClick }) => (
-  <div onClick={onClick} className="sidebar-item">
+  <div onClick={onClick} className="flex flex-row">
     {icon}
-    <span className="text-2xl  text-zinc-600">{label}</span>
+    <span className="text-lg text-zinc-600">{label}</span>
   </div>
 );
 
@@ -21,57 +26,38 @@ const Sidebar = () => {
     setNavigationBar(false);
     setNavBtn(true);
   };
-  const handleNavBtn = () => {
-    setNavigationBar(!navigationbar);
-    setNavBtn(!navbtn);
-  };
 
   return (
-    <div>
-      {navbtn && (
-        <button
-          className="bg-blue-800 p-3 items-center justify-center text-white"
-          onClick={handleNavBtn}
-        >
-          <MultiSelectIcon size={33} />
-        </button>
-      )}
-      {navigationbar && (
-        <div className="space-y-1 absolute z-10 justify-between h-screen flex flex-col bg-slate-100 shadow-sm">
-          <div className="flex flex-row items-center bg-blue-900">
-            <div className="flex flex-col items-center justify-start space-x-3 py-3 px-1">
-              <div className="p-8 rounded-full bg-white">
-                <p>User</p>
-              </div>
-              <div className="flex flex-col">
-                <p className=" text-white font-bold text-2xl">Admin</p>
-                <p className="font-serif text-white font-bold text-2xl">
-                  General Manager
-                </p>
-              </div>
+    <div className="space-y-1 z-10 justify-between h-screen flex flex-col bg-slate-50 shadow-sm px-2 py-1">
+      <div className="space-y-1">
+        {sidebarItems.map((item, index) => (
+          <motion.div whileHover={{ opacity: 0.3 }}>
+            <div
+              onClick={() => handleRouteClick(item.route)}
+              className="bg-white p-2 py-2 min-w-64"
+            >
+              <SidebarItem key={index} label={item.label} icon={item.icon} />
             </div>
-            <div className="sticky">
-              <BellIcon className="text-white font-bold" size={24} />
+          </motion.div>
+        ))}
+        <div>
+          <p>Account</p>
+          <div className="mt-2 space-y-3 p-2">
+            <div className="flex flex-row space-x-2">
+              <PersonIcon size={24} />
+              <p>Profile</p>
             </div>
-          </div>
-          <div className="space-y-1">
-            {sidebarItems.map((item, index) => (
-              <motion.div whileHover={{ opacity: 0.3 }}>
-                <div
-                  onClick={() => handleRouteClick(item.route)}
-                  className="bg-amber-400 p-4 py-5 min-w-64"
-                >
-                  <SidebarItem
-                    key={index}
-                    label={item.label}
-                    icon={item.icon}
-                  />
-                </div>
-              </motion.div>
-            ))}
+            <div className="flex flex-row space-x-2">
+              <CommentDiscussionIcon size={24} />
+              <p>chat</p>
+            </div>
+            <div className="flex flex-row space-x-2">
+              <BellIcon size={24} />
+              <p>notification</p>
+            </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };
