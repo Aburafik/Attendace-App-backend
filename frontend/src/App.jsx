@@ -5,8 +5,15 @@ import { useState, useEffect } from "react";
 import Store from "./store/Store";
 import { AppRouters } from "./routes/index";
 import Layout from "./components/Layout";
+import {
+  QueryClient,
+  QueryClientProvider,
+  useQuery,
+} from "@tanstack/react-query";
 
 function App() {
+  const queryClient = new QueryClient();
+
   const [user, setUser] = useState(null);
   useEffect(() => {
     const savedUser = localStorage.getItem("token");
@@ -26,13 +33,15 @@ function App() {
 
   return (
     <React.StrictMode>
-      <Provider store={Store}>
-        <Router>
-          <Layout>
-            <AppRouters />
-          </Layout>
-        </Router>
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={Store}>
+          <Router>
+            <Layout>
+              <AppRouters />
+            </Layout>
+          </Router>
+        </Provider>
+      </QueryClientProvider>
     </React.StrictMode>
   );
 }

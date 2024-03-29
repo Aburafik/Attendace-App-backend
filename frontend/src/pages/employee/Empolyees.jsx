@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Employeecard from "../../components/cards/Employeecard";
 import { useNavigate } from "react-router-dom";
 import { PlusCircleIcon } from "@primer/octicons-react";
-import { fetchEmployees } from "../../features/employee/Employeeslice";
+import { fetchEmployees } from "../../features/slice/Employeeslice";
 
 const Employees = () => {
   const employees = useSelector((state) => state.employees.employees);
@@ -14,7 +14,7 @@ const Employees = () => {
   }, [dispatch]);
 
   return (
-    <div className="container mx-auto py-4">
+    <div className="container mx-auto py-4 mt-10">
       {employees.length > 0 ? (
         <div>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
