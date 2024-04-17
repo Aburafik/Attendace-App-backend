@@ -11,6 +11,7 @@ const app = express();
 app.use(bodyParser.json());
 const socketIO = require("socket.io");
 const http = require("http");
+const moment = require("moment/moment");
 // const io = require("socket.io")(http);
 const server = http.createServer(app);
 const io = socketIO(server, {
@@ -156,6 +157,63 @@ const getAllAttendanceRecords = async (req, res) => {
   }
 };
 
+const getRecordsForClockIn = async (req, res) => {
+  const _id = req.params.id;
+  try {
+    const today = moment().startOf("day").toDate();
+
+    const employee = await Employee.findById(_id);
+
+    if (!employee) {
+      return res
+        .status(201)
+        .json({ message: `could not fing employee with id ${_d}` });
+    }
+
+    const todaysClockInRecord = await AttendanceRecord.find({
+      employee: employee._id,
+      email: employee.email,
+      clockInTime: {
+        $gte: today,
+      },
+      clockOutTime: null,
+    });
+
+    if (todaysClockInRecord.length === 0) {
+      return res.status(201).json({ message: "Not yet clocked in" });
+    }
+
+    res.status(200).json(todaysClockInRecord);
+  } catch (error) {
+    console.error("Error fetching clock in records", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching clock in records" });
+  }
+};
+
+const getRecordsForClockOut = async (req, res) => {
+  try {
+    const today = moment().startOf("day").toDate();
+
+    const todaysClockOutRecord = await AttendanceRecord.find({
+      employee: {},
+      clockInTime: {
+        $gte: today,
+        $lt: moment().endOf("day").toDate(),
+      },
+      clockOutTime: { $ne: null },
+    });
+
+    res.status(200).json(todaysClockOutRecord);
+  } catch (error) {
+    console.error("Error fetching clock out records", error);
+    res
+      .status(500)
+      .json({ message: "An error occurred while fetching clock out records" });
+  }
+};
+
 // Admin-only route to query attendance records for a particular employee
 const getSingleRecord = async (req, res) => {
   const { employeeId } = req.body;
@@ -233,6 +291,8 @@ module.exports = {
   createEmployee,
   getAllEmployees,
   notifications,
+  getRecordsForClockIn,
+  getRecordsForClockOut,
   getAllAttendanceRecords,
   getSingleRecord,
   updateEmployeeLeaveRequest,
