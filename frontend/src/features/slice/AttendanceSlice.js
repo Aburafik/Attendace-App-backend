@@ -5,7 +5,7 @@ export const fetchAllAttendanceRecords = createAsyncThunk(
   async () => {
     try {
       const response = await fetch(
-        "http://localhost:5000/api/admin/attendance/all-records"
+        "http://localhost:5000/api/admin/attendance/clockIn-records"
       );
 
       if (response.status === 200) {
@@ -57,4 +57,4 @@ const AttendanceSlice = createSlice({
 });
 
 export const { reset } = AttendanceSlice.actions;
-export default AttendanceSlice;
+export default AttendanceSlice.reducer;
