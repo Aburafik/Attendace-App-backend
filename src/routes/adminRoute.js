@@ -26,13 +26,13 @@ router.post("/notifications", notifications);
 router.get("/employees", getAllEmployees);
 router
   .get(
-    "/attendance/clockIn-records/:id",
+    "/attendance/clockIn-records",
     // authMiddleware,
     // isAdmin,
     getRecordsForClockIn
   )
   .get(
-    "/attendance/clockOut-records",
+    "/attendance/clockOut-records/:id",
     // authMiddleware,
     // isAdmin,
     getRecordsForClockOut

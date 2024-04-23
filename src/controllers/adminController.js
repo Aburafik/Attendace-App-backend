@@ -164,17 +164,18 @@ const getRecordsForClockIn = async (req, res) => {
 
     const employee = await Employee.findById(_id);
 
-    if (!employee) {
-      return res
-        .status(201)
-        .json({ message: `could not fing employee with id ${_d}` });
-    }
+    // if (!employee) {
+    //   return res
+    //     .status(201)
+    //     .json({ message: `could not fing employee with id ${_d}` });
+    // }
 
     const todaysClockInRecord = await AttendanceRecord.find({
-      employee: employee._id,
-      email: employee.email,
+      // employee: employee._id,
+      // email: employee.email,
       clockInTime: {
         $gte: today,
+        $ne: null,
       },
       clockOutTime: null,
     });
@@ -193,11 +194,20 @@ const getRecordsForClockIn = async (req, res) => {
 };
 
 const getRecordsForClockOut = async (req, res) => {
+  const _id = req.params.id;
   try {
     const today = moment().startOf("day").toDate();
 
+    const employee = await Employee.findById(_id);
+
+    if (!employee) {
+      return res
+        .status(201)
+        .json({ message: `could not fing employee with id ${_d}` });
+    }
+
     const todaysClockOutRecord = await AttendanceRecord.find({
-      employee: {},
+      employee: employee._id,
       clockInTime: {
         $gte: today,
         $lt: moment().endOf("day").toDate(),
